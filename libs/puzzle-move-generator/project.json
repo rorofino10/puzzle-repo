@@ -1,0 +1,30 @@
+{
+  "name": "puzzle-move-generator",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/puzzle-move-generator/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/puzzle-move-generator",
+        "main": "libs/puzzle-move-generator/src/index.ts",
+        "tsConfig": "libs/puzzle-move-generator/tsconfig.lib.json",
+        "assets": ["libs/puzzle-move-generator/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/puzzle-move-generator/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}

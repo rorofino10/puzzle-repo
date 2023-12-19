@@ -14,7 +14,12 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@puzzle-repo/puzzle-engine": ["libs/puzzle-engine/src/index.ts"],
+      "@puzzle-repo/puzzle-move-generator": [
+        "libs/puzzle-move-generator/src/index.ts"
+      ]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

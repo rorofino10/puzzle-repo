@@ -1,3 +1,4 @@
+import { benchmark_function } from '../utils/benchmarking-utils';
 import {
   BitBoard,
   and,
@@ -25,7 +26,7 @@ const golden_squares = BitBoard.empty();
 describe('board', () => {
   const boardToTest = new Board(pieces, golden_pieces, golden_squares);
   it('Should have 64 squares', () => {
-    expect(boardToTest.size).toBe(64);
+    expect(boardToTest.SIZE).toBe(64);
   });
 
   // it('Should validate square', () => {
@@ -63,7 +64,7 @@ describe('board', () => {
       BitBoard.empty()
     );
 
-    let legalMoves = testingBoard.getCurrentLegalMoves();
+    let legalMoves = testingBoard.currentLegalMoves;
     // console.log(legalMoves);
     // testingBoard.getPiecesBitboard().logAsTable();
     expect(legalMoves.length).toBe(6);
@@ -72,11 +73,53 @@ describe('board', () => {
       Move(Square(RANK.FOUR, FILE.C), Square(RANK.SEVEN, FILE.C))
     );
 
-    legalMoves = testingBoard.getCurrentLegalMoves();
+    legalMoves = testingBoard.currentLegalMoves;
 
     // console.log(legalMoves);
     // testingBoard.getPiecesBitboard().logAsTable();
     expect(legalMoves.length).toBe(2);
+  });
+  it('Should undo previous move ', () => {
+    const testingBitBoard = BitBoard.empty()
+      .setBit(RankFileToIndex(RANK.FOUR, FILE.A))
+      .setBit(RankFileToIndex(RANK.EIGHT, FILE.C))
+      .setBit(RankFileToIndex(RANK.FOUR, FILE.C))
+      .setBit(RankFileToIndex(RANK.ONE, FILE.C));
+
+    const testingBoard = new Board(
+      testingBitBoard,
+      BitBoard.empty(),
+      BitBoard.empty()
+    );
+
+    testingBoard.inputMove(
+      Move(Square(RANK.FOUR, FILE.C), Square(RANK.SEVEN, FILE.C))
+    );
+
+    expect(testingBoard.moveHistory.length).toBe(1);
+
+    const result = testingBoard.undoMove();
+    expect(testingBoard.currentLegalMoves.length).toBe(6);
+    expect(testingBoard.moveHistory.length).toBe(0);
+    expect(result).toEqual(Success.UNDO_SUCCESS);
+  });
+  it('Should not undo previous move ', () => {
+    const testingBitBoard = BitBoard.empty()
+      .setBit(RankFileToIndex(RANK.FOUR, FILE.A))
+      .setBit(RankFileToIndex(RANK.EIGHT, FILE.C))
+      .setBit(RankFileToIndex(RANK.FOUR, FILE.C))
+      .setBit(RankFileToIndex(RANK.ONE, FILE.C));
+
+    const testingBoard = new Board(
+      testingBitBoard,
+      BitBoard.empty(),
+      BitBoard.empty()
+    );
+
+    const result = testingBoard.undoMove();
+    expect(testingBoard.currentLegalMoves.length).toBe(6);
+    expect(testingBoard.moveHistory.length).toBe(0);
+    expect(result).toEqual(Error.NO_MOVE_TO_UNDO);
   });
   test('Level 12 ', () => {
     const piecesBitBoard = BitBoard.empty()
@@ -98,26 +141,26 @@ describe('board', () => {
       golden_squaresBitBoard
     );
 
-    testingBoard.getPiecesBitboard().logAsTable('Pieces', '1');
-    testingBoard.getGoldenPiecesBitboard().logAsTable('Golden Pieces', '2');
-    testingBoard.getGoldenSquaresBitboard().logAsTable('Golden Squares', 'X');
+    // testingBoard.occupancy.logAsTable('Occupancy');
+    // testingBoard.getPiecesBitboard().logAsTable('Pieces', '1');
+    // testingBoard.getGoldenPiecesBitboard().logAsTable('Golden Pieces', '2');
+    // testingBoard.getGoldenSquaresBitboard().logAsTable('Golden Squares', 'X');
 
-    let legalMoves = testingBoard.getCurrentLegalMoves();
-    console.log(legalMoves);
-    // testingBoard.getPiecesBitboard().logAsTable();
+    let legalMoves = testingBoard.currentLegalMoves;
     expect(legalMoves.length).toBe(12);
 
+    const time = process.hrtime();
     const result = testingBoard.inputMove(
       Move(Square(RANK.ONE, FILE.E), Square(RANK.ONE, FILE.B))
     );
+    const timeEnd = process.hrtime(time);
 
-    testingBoard.getPiecesBitboard().logAsTable('Pieces', '1');
-    testingBoard.getGoldenPiecesBitboard().logAsTable('Golden Pieces', '2');
-    testingBoard.getGoldenSquaresBitboard().logAsTable('Golden Squares', 'X');
+    console.log(timeEnd[1], 'Nanoseconds');
 
-    legalMoves = testingBoard.getCurrentLegalMoves();
-    console.log(legalMoves);
-
+    legalMoves = testingBoard.currentLegalMoves;
     expect(legalMoves.length).toBe(8);
+
+    testingBoard.undoMove();
+    expect(testingBoard.currentLegalMoves.length).toBe(12);
   });
 });

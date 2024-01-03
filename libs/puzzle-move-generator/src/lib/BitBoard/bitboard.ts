@@ -134,7 +134,7 @@ export class BitBoard {
     return filemask;
   }
 
-  logAsTable(name?: string, unit: string = '1'): void {
+  asTableString(unit: string = '1'): string {
     const binaryString = this.board.toString(2).padStart(64, '0');
     let tableString = '';
 
@@ -146,8 +146,7 @@ export class BitBoard {
       }
       tableString += row.trim() + '\n';
     }
-
-    console.log(name, '\n' + tableString.trim());
+    return tableString.trim();
   }
   logAsArray(): string[] {
     const binaryString = this.board.toString(2).padStart(64, '0');
@@ -267,13 +266,48 @@ export const mergeBytesIntoUint64 = (input_bytes: Uint8Array) => {
   let uint64 = BigInt.asUintN(64, 0n);
 
   for (let i = 0; i < 8; i++) {
-    uint64 = (uint64 << BigInt(8)) ^ BigInt(input_bytes[7 - i]);
+    uint64 = (uint64 << BigInt(8)) ^ BigInt(input_bytes[i]);
   }
   return uint64;
 };
 export const reverseBytes = (input_bytes: Uint8Array): Uint8Array => {
-  const reversed_bytes = input_bytes
-    .map((byte) => BitReverseTable256[byte])
-    .reverse();
+  const reversed_bytes = input_bytes.map((byte) => BitReverseTable256[byte]);
   return reversed_bytes;
+};
+
+export const surrounding_bits_uint64 = (input: bigint) => {
+  const size = 8; // Assuming an 8x8 grid
+  let result = input;
+
+  for (let row = 0; row < size; row++) {
+    for (let col = 0; col < size; col++) {
+      const bitPosition = row * size + col;
+
+      if ((input & (1n << BigInt(bitPosition))) !== 0n) {
+        // Set surrounding bits to 1, excluding corners
+        for (let i = -1; i <= 1; i++) {
+          for (let j = -1; j <= 1; j++) {
+            const newRow = row + i;
+            const newCol = col + j;
+
+            if (
+              newRow >= 0 &&
+              newRow < size &&
+              newCol >= 0 &&
+              newCol < size &&
+              !(i !== 0 && j !== 0) // Exclude corners
+            ) {
+              const newPosition = newRow * size + newCol;
+              result |= 1n << BigInt(newPosition);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Set the original 1 bits to 0
+  result &= ~input;
+
+  return result;
 };

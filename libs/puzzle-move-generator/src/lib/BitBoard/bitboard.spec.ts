@@ -13,25 +13,18 @@ import {
 import { BitReverseTable256 } from './bit-reverse-table';
 describe('BitBoard', () => {
   test('Creating a BitBoard from binary string', () => {
-    const time = process.hrtime();
     const binaryString =
       '1010101010101010101010101010101010101010101010101010101010101010';
     const bitboard = BitBoard.fromBinaryString(binaryString);
     expect(bitboard.getBoard().toString()).toEqual(
       BigInt('0b' + binaryString).toString()
     );
-    const timeEnd = process.hrtime(time);
-    console.log('String to Bitboard:', timeEnd[1], 'nanoseconds');
   });
 
   test('Reverse operation', () => {
     const boardToReverse = BitBoard.empty().setBit(0);
     const expectedBoard = BitBoard.empty().setBit(63);
-
-    const time = process.hrtime();
     const reversed_board = reverse(boardToReverse);
-    const timeEnd = process.hrtime(time);
-    console.log('Reverse Bitboard :', timeEnd[1], 'nanoseconds');
 
     expect(reversed_board.getBoard().toString(2)).toEqual(
       expectedBoard.getBoard().toString(2)
@@ -45,10 +38,7 @@ describe('BitBoard', () => {
       '1100110011001100110011001100110011001100110011001100110011001100'
     );
 
-    const time = process.hrtime();
     const result = or(board1, board2);
-    const timeEnd = process.hrtime(time);
-    console.log('OR Bitboard:', timeEnd[1], 'nanoseconds');
 
     expect(result.getBoard().toString()).toEqual(
       BigInt(
@@ -64,12 +54,24 @@ describe('BitBoard', () => {
     const board2 = BitBoard.fromBinaryString(
       '1100110011001100110011001100110011001100110011001100110011001100'
     );
-    const time = process.hrtime();
     const result = and(board1, board2);
-    const timeEnd = process.hrtime(time);
-    console.log('AND Bitboard:', timeEnd[1], 'nanoseconds');
 
     expect(result.getBoard().toString()).toEqual(
+      BigInt(
+        '0b1000100010001000100010001000100010001000100010001000100010001000'
+      ).toString()
+    );
+  });
+  test('AND operation', () => {
+    const board1 = BitBoard.fromBinaryString(
+      '1010101010101010101010101010101010101010101010101010101010101010'
+    );
+    const board2 = BitBoard.fromBinaryString(
+      '1100110011001100110011001100110011001100110011001100110011001100'
+    );
+    const result = board1.getBoard() & board2.getBoard();
+
+    expect(result.toString()).toEqual(
       BigInt(
         '0b1000100010001000100010001000100010001000100010001000100010001000'
       ).toString()
@@ -83,10 +85,7 @@ describe('BitBoard', () => {
     const board2 = BitBoard.fromBinaryString(
       '1100110011001100110011001100110011001100110011001100110011001100'
     );
-    const time = process.hrtime();
     const result = xor(board1, board2);
-    const timeEnd = process.hrtime(time);
-    console.log('XOR Bitboard:', timeEnd[1], 'nanoseconds');
 
     expect(result.getBoard().toString()).toEqual(
       (board1.getBoard() ^ board2.getBoard()).toString()
@@ -94,8 +93,6 @@ describe('BitBoard', () => {
   });
 
   test('Set Bit operation', () => {
-    const time = process.hrtime();
-
     // Initial bitboard: 1010101010101010101010101010101010101010101010101010101010101010
     const initialBoard = BitBoard.fromBinaryString(
       '0010101010101010101010101010101010101010101010101010101010100010'
@@ -114,8 +111,6 @@ describe('BitBoard', () => {
     );
   });
   test('Clear Bit operation', () => {
-    const time = process.hrtime();
-
     // Initial bitboard: 1010101010101010101010101010101010101010101010101010101010101010
     const initialBoard = BitBoard.fromBinaryString(
       '1010101010101010101010101010101010101010101010101010101010101010'
@@ -134,8 +129,6 @@ describe('BitBoard', () => {
     );
   });
   test('Get Bit operation', () => {
-    const time = process.hrtime();
-
     // Initial bitboard: 1010101010101010101010101010101010101010101010101010101010101010
     const initialBoard = BitBoard.fromBinaryString(
       '1010101010101010101010101010101010101010101010101010101010101010'
@@ -148,18 +141,12 @@ describe('BitBoard', () => {
     expect(initialBoard.getBit(63)).toBe(1); // Adjust this value based on the expected result
     expect(initialBoard.getBit(0)).toBe(0); // Adjust this value based on the expected result
   });
-  test('Reverse uint64', () => {
-    const input_uint64 = BigInt.asUintN(64, 1n);
-    const reversed_input = reverse_uint64(input_uint64);
-    // console.log(input_uint64.toString(2));
-    // console.log(reversed_input.toString(2));
-  });
   test('Reverse bytes', () => {
     const input_bytes = new Uint8Array(8);
     input_bytes[0] = 1;
     const reversed_bytes = reverseBytes(input_bytes);
 
-    expect(reversed_bytes[7]).toBe(128);
+    expect(reversed_bytes[0]).toBe(128);
   });
   test('Split Uint64 Into Bytes', () => {
     const input = BigInt.asUintN(
@@ -172,7 +159,7 @@ describe('BitBoard', () => {
     const input_bytes = new Uint8Array(8);
     input_bytes[0] = 255;
     input_bytes[2] = 255;
-    input_bytes[4] = 255;
+    input_bytes[3] = 255;
     input_bytes[5] = 255;
     input_bytes[7] = 255;
     const uint64 = mergeBytesIntoUint64(input_bytes);

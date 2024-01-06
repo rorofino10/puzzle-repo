@@ -197,6 +197,10 @@ export class Board {
       surrounding_bits_uint64((occupancy ^ piece_bitboard) & file_mask);
     return new BitBoard(horizontal_attacks | vertical_attacks_attacks);
   }
+
+  public static EMPTY(): Board {
+    return new Board(BitBoard.empty(), BitBoard.empty(), BitBoard.empty());
+  }
 }
 
 export enum Error {

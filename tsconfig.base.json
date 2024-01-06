@@ -18,6 +18,9 @@
       "@puzzle-repo/puzzle-engine": ["libs/puzzle-engine/src/index.ts"],
       "@puzzle-repo/puzzle-move-generator": [
         "libs/puzzle-move-generator/src/index.ts"
+      ],
+      "@puzzle-repo/puzzle-ui-components": [
+        "libs/puzzle-ui-components/src/index.ts"
       ]
     }
   },

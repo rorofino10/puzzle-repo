@@ -44,7 +44,6 @@ const level12 = new Board(
   styleUrl: './level-n.component.scss',
 })
 export class LevelNComponent {
-  currentTime: Date = new Date();
   inputRandomMove(): void {
     const moves = this.board.currentLegalMoves;
     const move = getRandomMove(moves);
@@ -64,7 +63,6 @@ export class LevelNComponent {
       golden_piecesBitBoard,
       golden_squaresBitBoard
     );
-    console.log(true);
   }
 
   private activatedRoute = inject(ActivatedRoute);

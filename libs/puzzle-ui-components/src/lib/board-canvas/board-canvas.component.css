@@ -1,17 +1,29 @@
 .wrapper {
     aspect-ratio: 1;
-    height: max(50vh, 500px);
+    width: max(50vw, 400px);
     display: grid;
-    grid-template-columns: repeat(9, 1fr);
-    grid-template-rows: repeat(9, 1fr);
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
     gap: 5px;
-    background-color: darkslategray;
+    background-color: #4b7399;
 }
 
 .piece {
-    border-radius: 10px;
+    transition: all 1s;
+    -moz-transition: all 0.5s;
+    border-radius: 100%;
     aspect-ratio: 1;
-    width: 100%;
+    margin: 10px;
     display: block;
-    background-color: wheat;
+    background-color: #f8f8f8;
+}
+.square {
+    transition: all 1s;
+    -moz-transition: all 0.5s;
+    aspect-ratio: 1;
+    display: block;
+    background-color: #eae9d2;
+}
+.piece:hover {
+  scale: 1.1;
 }

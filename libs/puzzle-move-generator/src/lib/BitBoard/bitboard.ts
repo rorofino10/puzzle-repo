@@ -213,8 +213,6 @@ export const extractSquaresFromBitboard = (bitboard: BitBoard): Square[] => {
   return squares;
 };
 
-const abs = (n: bigint) => (n < 0n ? -n : n);
-
 export const flipVertically = (inputBoard: BitBoard): BitBoard => {
   const inputRows = inputBoard.logAsArray();
   const flippedRows = inputRows.reverse();

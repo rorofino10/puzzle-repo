@@ -1,13 +1,4 @@
-import { benchmark_function } from '../utils/benchmarking-utils';
-import {
-  BitBoard,
-  and,
-  minus,
-  not,
-  or,
-  reverse,
-  xor,
-} from '../BitBoard/bitboard';
+import { BitBoard } from '../BitBoard/bitboard';
 import { FILE } from '../Square/file';
 import { RANK } from '../Square/rank';
 import { RankFileToIndex, Square } from '../Square/square';
@@ -69,7 +60,7 @@ describe('board', () => {
     // testingBoard.getPiecesBitboard().logAsTable();
     expect(legalMoves.length).toBe(6);
 
-    const result = testingBoard.inputMove(
+    testingBoard.inputMove(
       Move(Square(RANK.FOUR, FILE.C), Square(RANK.SEVEN, FILE.C))
     );
 
@@ -150,7 +141,7 @@ describe('board', () => {
     expect(legalMoves.length).toBe(12);
 
     const time = process.hrtime();
-    const result = testingBoard.inputMove(
+    testingBoard.inputMove(
       Move(Square(RANK.ONE, FILE.E), Square(RANK.ONE, FILE.B))
     );
     const timeEnd = process.hrtime(time);

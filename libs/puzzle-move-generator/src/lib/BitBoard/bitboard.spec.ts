@@ -2,15 +2,12 @@ import {
   BitBoard,
   and,
   mergeBytesIntoUint64,
-  old_reverse,
   or,
   reverse,
   reverseBytes,
-  reverse_uint64,
   splitUint64IntoBytes,
   xor,
 } from './bitboard';
-import { BitReverseTable256 } from './bit-reverse-table';
 describe('BitBoard', () => {
   test('Creating a BitBoard from binary string', () => {
     const binaryString =
@@ -153,7 +150,7 @@ describe('BitBoard', () => {
       64,
       0b1000000000000000000000000000000000000000000000000000000000000001n
     );
-    const bytes = splitUint64IntoBytes(input);
+    splitUint64IntoBytes(input);
   });
   test('Merge Bytes into Uint64', () => {
     const input_bytes = new Uint8Array(8);

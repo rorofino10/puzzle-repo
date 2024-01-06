@@ -1,4 +1,4 @@
-import { Component, Input, signal } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Board } from '@puzzle-repo/puzzle-move-generator';
 
@@ -10,5 +10,9 @@ import { Board } from '@puzzle-repo/puzzle-move-generator';
   styleUrl: './board-canvas.component.css',
 })
 export class BoardCanvasComponent {
-  @Input() board: Board = Board.EMPTY();
+  @Input({ required: true }) board!: Board;
+
+  ngOnChanges(): void {
+    console.log(this.board);
+  }
 }

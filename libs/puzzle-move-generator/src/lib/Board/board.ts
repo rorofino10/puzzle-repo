@@ -24,9 +24,13 @@ export class Board {
   readonly HEIGHT = 8;
   readonly SIZE = this.WIDTH * this.HEIGHT;
 
-  normie_pieces_bitboard: BitBoard;
-  golden_pieces_bitboard: BitBoard;
-  golden_squares_bitboard: BitBoard;
+  private normie_pieces_bitboard: BitBoard;
+  private golden_pieces_bitboard: BitBoard;
+  private golden_squares_bitboard: BitBoard;
+
+  normie_pieces: Square[] = [];
+  golden_pieces: Square[] = [];
+  golden_squares: Square[] = [];
 
   constructor(
     normie_pieces: BitBoard,
@@ -36,9 +40,20 @@ export class Board {
     this.normie_pieces_bitboard = normie_pieces;
     this.golden_pieces_bitboard = golden_pieces;
     this.golden_squares_bitboard = golden_squares;
+    this.updateBitboardToSquares();
     this.generateCurrentLegalMoves();
   }
-
+  private updateBitboardToSquares() {
+    this.normie_pieces = extractSquaresFromBitboard(
+      this.normie_pieces_bitboard
+    );
+    this.golden_pieces = extractSquaresFromBitboard(
+      this.golden_pieces_bitboard
+    );
+    this.golden_squares = extractSquaresFromBitboard(
+      this.golden_squares_bitboard
+    );
+  }
   private checkWin(): GameState {
     return and(
       this.golden_pieces_bitboard,
@@ -60,6 +75,16 @@ export class Board {
   }
   get OccupancyBitboard(): BitBoard {
     return or(this.normie_pieces_bitboard, this.golden_pieces_bitboard);
+  }
+
+  get NormiePiecesSquares(): Square[] {
+    return extractSquaresFromBitboard(this.normie_pieces_bitboard);
+  }
+  get GoldenPiecesSquares(): Square[] {
+    return extractSquaresFromBitboard(this.golden_pieces_bitboard);
+  }
+  get GoldenSquares(): Square[] {
+    return extractSquaresFromBitboard(this.golden_squares_bitboard);
   }
 
   get gameState(): GameState {
@@ -113,7 +138,8 @@ export class Board {
     const moveBitboard = moveToBitboard(move);
 
     if (
-      and(moveOriginToBitboard(move), this.golden_pieces_bitboard).getBoard() >
+      (moveOriginToBitboard(move).getBoard() &
+        this.golden_pieces_bitboard.getBoard()) >
       0
     ) {
       this.golden_pieces_bitboard = xor(
@@ -126,6 +152,7 @@ export class Board {
         moveBitboard
       );
     }
+    this.updateBitboardToSquares();
   }
 
   private isValidSquare(square: Square): boolean {

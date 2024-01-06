@@ -1,0 +1,17 @@
+.wrapper {
+    aspect-ratio: 1;
+    height: max(50vh, 500px);
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    grid-template-rows: repeat(9, 1fr);
+    gap: 5px;
+    background-color: darkslategray;
+}
+
+.piece {
+    border-radius: 10px;
+    aspect-ratio: 1;
+    width: 100%;
+    display: block;
+    background-color: wheat;
+}

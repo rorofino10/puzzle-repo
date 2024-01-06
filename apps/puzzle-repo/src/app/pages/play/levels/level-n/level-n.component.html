@@ -1,3 +1,7 @@
 <p>level-{{ levelId | async }} works!</p>
-<board-canvas />
+<button (click)="inputRandomMove()">Random Move</button>
+<button (click)="undoMove()">Undo Move</button>
+<button (click)="resetBoard()">Reset Board</button>
+
+<board-canvas [board]="board" />
 <!-- <level-info></level-info> -->

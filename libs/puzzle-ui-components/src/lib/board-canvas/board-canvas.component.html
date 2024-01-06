@@ -1,1 +1,24 @@
 <p>board-canvas works!</p>
+<div class="wrapper">
+  @for (square of board.normie_pieces; track $index) {
+  <div
+    class="piece"
+    [style.gridColumn]="square.file + 1"
+    [style.gridRow]="board.HEIGHT - square.rank + 1"
+  ></div>
+  } @for (square of board.golden_pieces; track $index) {
+  <div
+    class="piece"
+    [style.backgroundColor]="'blue'"
+    [style.gridColumn]="square.file + 1"
+    [style.gridRow]="8 - square.rank + 1"
+  ></div>
+  } @for (square of board.golden_squares; track $index) {
+  <div
+    class="piece"
+    [style.backgroundColor]="'yellow'"
+    [style.gridColumn]="square.file + 1"
+    [style.gridRow]="board.HEIGHT - square.rank + 1"
+  ></div>
+  }
+</div>

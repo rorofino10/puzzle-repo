@@ -98,6 +98,10 @@ export class LevelNComponent {
   }
   goToMove(turn: number): void {
     this.board.goToMove(turn);
+    const lastMoveString = MoveToString(
+      this.board.moveHistory[this.board.moveHistory.length - 1]
+    );
+    console.log(this.board.moveHistory.length, lastMoveString);
   }
   redoMove(): void {
     this.board.redoMove();

@@ -97,3 +97,10 @@ export const CompareSquares = (square1: Square, square2: Square): boolean => {
 export const SquareToString = (square: Square): string => {
   return `${FILE_STRING_MAP[square.file]}${square.rank + 1}`;
 };
+
+export const StringToSquare = (moveString: string): Square => {
+  return Square(
+    Number(moveString[1]),
+    FILE_STRING_MAP.findIndex((file) => file === moveString[0])
+  );
+};

@@ -1,4 +1,4 @@
-import { CompareSquares, Square } from '../Square/square';
+import { CompareSquares, Square, SquareToString } from '../Square/square';
 
 export type Move = {
   origin: Square;
@@ -14,4 +14,10 @@ export const CompareMove = (move1: Move, move2: Move): boolean => {
     CompareSquares(move1.origin, move2.origin) &&
     CompareSquares(move1.destination, move2.destination)
   );
+};
+
+export const MoveToString = (move: Move): string => {
+  return `${SquareToString(move.origin)} => ${SquareToString(
+    move.destination
+  )}`;
 };

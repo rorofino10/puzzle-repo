@@ -8,3 +8,5 @@ export enum FILE {
   G = 6,
   H = 7,
 }
+
+export const FILE_STRING_MAP = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];

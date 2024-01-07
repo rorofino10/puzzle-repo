@@ -1,5 +1,5 @@
 import { getFile, getRank } from '../BitBoard/bitboard';
-import { FILE } from './file';
+import { FILE, FILE_STRING_MAP } from './file';
 import { RANK } from './rank';
 
 export type Index =
@@ -92,4 +92,8 @@ export const Square = (rank: RANK, file: FILE): Square => {
 
 export const CompareSquares = (square1: Square, square2: Square): boolean => {
   return square1.file === square2.file && square1.rank === square2.rank;
+};
+
+export const SquareToString = (square: Square): string => {
+  return `${FILE_STRING_MAP[square.file]}${square.rank + 1}`;
 };

@@ -1,29 +1,33 @@
 .wrapper {
     aspect-ratio: 1;
-    width: max(50vw, 400px);
     display: grid;
     grid-template-columns: repeat(8, 1fr);
     grid-template-rows: repeat(8, 1fr);
-    gap: 5px;
     background-color: #4b7399;
+    border: black solid 1px;
+    justify-items: center;
+    align-items: center;
 }
 
 .piece {
-    transition: all 1s;
-    -moz-transition: all 0.5s;
+    transition: background-color 0.5s;
+    width: 50px;
     border-radius: 100%;
     aspect-ratio: 1;
-    margin: 10px;
     display: block;
-    background-color: #f8f8f8;
+    background-color: #4b7399;
 }
 .square {
-    transition: all 1s;
-    -moz-transition: all 0.5s;
+    width: 50px;
+    border: black solid 1px;
+    transition: all 0.5s;
     aspect-ratio: 1;
     display: block;
     background-color: #eae9d2;
 }
 .piece:hover {
-  scale: 1.1;
+    background-color: red;
+}
+.highlighted {
+    scale: 1.5;
 }

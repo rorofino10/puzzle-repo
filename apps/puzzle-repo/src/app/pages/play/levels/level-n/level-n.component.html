@@ -1,7 +1,14 @@
-<p>level-{{ levelId | async }} works!</p>
-<button (click)="inputRandomMove()">Random Move</button>
-<button (click)="undoMove()">Undo Move</button>
-<button (click)="resetBoard()">Reset Board</button>
-
 <board-canvas [board]="board" />
+<div>
+  <p>
+    {{ normie_pieces_bitboard.getBoard() }} |
+    {{ golden_piece_bitboard.getBoard() }} |
+    {{ golden_square_bitboard.getBoard() }}
+  </p>
+  <button (click)="inputRandomMove()">Random Move</button>
+  <button (click)="undoMove()">Undo Move</button>
+  <button (click)="resetBoard()">Reset Board</button>
+  <button (click)="logMoves()">Log Moves</button>
+</div>
+
 <!-- <level-info></level-info> -->

@@ -1,7 +1,8 @@
-export { Move } from './lib/move/move';
+export { Move, MoveToString } from './lib/move/move';
 export {
   Index,
   Square,
+  SquareToString,
   SquareToIndex,
   RankFileToIndex,
   IndexToSquare,

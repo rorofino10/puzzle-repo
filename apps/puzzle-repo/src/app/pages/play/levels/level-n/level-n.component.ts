@@ -11,6 +11,7 @@ import {
   FILE,
   GameState,
   Move,
+  MoveToString,
   RANK,
   RankFileToIndex,
   Square,
@@ -44,6 +45,32 @@ const level12 = new Board(
   styleUrl: './level-n.component.scss',
 })
 export class LevelNComponent {
+  private activatedRoute = inject(ActivatedRoute);
+  // board = level12;
+  normie_pieces_bitboard = new BitBoard(
+    BigInt(this.activatedRoute.snapshot.params['normie_pieces'])
+  );
+  golden_piece_bitboard = BitBoard.empty().setBit(
+    Number(this.activatedRoute.snapshot.params['golden_piece'])
+  );
+  golden_square_bitboard = BitBoard.empty().setBit(
+    Number(this.activatedRoute.snapshot.params['golden_square'])
+  );
+  // normie_pieces_bitboard = this.activatedRoute.params.pipe(
+  //   map((p) => new BitBoard(BigInt(p['normie_pieces'])))
+  // );
+  // golden_piece_bitboard = this.activatedRoute.params.pipe(
+  //   map((p) => BitBoard.empty().setBit(Number(p['golden_piece'])))
+  // );
+  // golden_square_bitboard = this.activatedRoute.params.pipe(
+  //   map((p) => BitBoard.empty().setBit(Number(p['golden_square'])))
+  // );
+  board = new Board(
+    this.normie_pieces_bitboard,
+    this.golden_piece_bitboard,
+    this.golden_square_bitboard
+  );
+
   inputRandomMove(): void {
     const moves = this.board.currentLegalMoves;
     const move = getRandomMove(moves);
@@ -65,13 +92,16 @@ export class LevelNComponent {
     );
   }
 
-  private activatedRoute = inject(ActivatedRoute);
-  board = level12;
+  logMoves(): void {
+    const moveHistoryString = this.board.moveHistory.map((move) =>
+      MoveToString(move)
+    );
+    console.log(moveHistoryString);
+  }
 
-  levelId = this.activatedRoute.params.pipe(map((p) => p['id']));
-
-  ngOnInit(): void {}
-  ngOnDestroy(): void {}
+  ngOnInit(): void {
+    console.log(piecesBitBoard.getBoard());
+  }
 }
 
 function getRandomMove(array: Move[]): Move | undefined {

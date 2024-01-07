@@ -100,7 +100,7 @@ export const SquareToString = (square: Square): string => {
 
 export const StringToSquare = (moveString: string): Square => {
   return Square(
-    Number(moveString[1]),
+    Number(moveString[1]) - 1,
     FILE_STRING_MAP.findIndex((file) => file === moveString[0])
   );
 };

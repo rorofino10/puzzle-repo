@@ -24,6 +24,12 @@
       "options": {
         "jestConfig": "libs/puzzle-move-generator/jest.config.ts"
       }
+    },
+    "benchmark": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "ts-node libs/puzzle-move-generator/src/lib/puzzle-move-generator.benchmark.ts"
+      }
     }
   },
   "tags": []

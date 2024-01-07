@@ -140,18 +140,17 @@ describe('board', () => {
     let legalMoves = testingBoard.currentLegalMoves;
     expect(legalMoves.length).toBe(12);
 
-    const time = process.hrtime();
     testingBoard.inputMove(
       Move(Square(RANK.ONE, FILE.E), Square(RANK.ONE, FILE.B))
     );
-    const timeEnd = process.hrtime(time);
-
-    console.log(timeEnd[1], 'Nanoseconds');
 
     legalMoves = testingBoard.currentLegalMoves;
     expect(legalMoves.length).toBe(8);
 
     testingBoard.undoMove();
     expect(testingBoard.currentLegalMoves.length).toBe(12);
+
+    testingBoard.redoMove();
+    expect(testingBoard.currentLegalMoves.length).toBe(8);
   });
 });

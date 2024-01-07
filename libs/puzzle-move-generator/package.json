@@ -2,9 +2,13 @@
   "name": "@puzzle-repo/puzzle-move-generator",
   "version": "0.0.1",
   "dependencies": {
+    "benchmark": "^2.1.4",
     "tslib": "^2.3.0"
   },
   "type": "commonjs",
   "main": "./src/index.js",
-  "typings": "./src/index.d.ts"
+  "typings": "./src/index.d.ts",
+  "devDependencies": {
+    "@types/benchmark": "^2.1.5"
+  }
 }

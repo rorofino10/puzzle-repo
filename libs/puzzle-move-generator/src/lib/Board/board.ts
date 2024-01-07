@@ -204,7 +204,7 @@ export class Board {
     return Boolean(occupiedBitboard.getBit(index));
   }
 
-  private generateCurrentLegalMoves() {
+  public generateCurrentLegalMoves() {
     this._currentLegalMoves = [];
     const pieces_squares = extractSquaresFromBitboard(this.OccupancyBitboard);
     pieces_squares.forEach((piece_square) => {

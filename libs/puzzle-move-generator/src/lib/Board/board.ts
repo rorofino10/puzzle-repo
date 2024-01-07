@@ -17,6 +17,7 @@ import { CompareMove, Move } from '../move/move';
 export class Board {
   private _turn = 1;
   private _listOfMoves: Move[] = [];
+  private _undoList: Move[] = [];
   private _currentLegalMoves: Move[] = [];
   private _gameState: GameState = GameState.UNDEFINED;
 
@@ -96,6 +97,9 @@ export class Board {
   get moveHistory(): Move[] {
     return this._listOfMoves;
   }
+  get undoHistory(): Move[] {
+    return this._undoList;
+  }
   get currentLegalMoves(): Move[] {
     return this._currentLegalMoves;
   }
@@ -103,9 +107,38 @@ export class Board {
   undoMove(): Result {
     const lastMove = this._listOfMoves.pop();
     if (!lastMove) return Error.NO_MOVE_TO_UNDO;
+
     this.makeMove(Move(lastMove.destination, lastMove.origin));
     this.generateCurrentLegalMoves();
+    this._undoList.push(lastMove);
     return Success.UNDO_SUCCESS;
+  }
+
+  redoMove(): Result {
+    if (!this._undoList) return Error.NO_MOVE_TO_REDO;
+    const firstMove = this._undoList.pop();
+    if (!firstMove) return Error.NO_MOVE_TO_REDO;
+    this.makeMove(firstMove);
+
+    this._listOfMoves.push(firstMove);
+
+    this.generateCurrentLegalMoves();
+    return Success.REDO_SUCCESS;
+  }
+  goToMove(turnToGo: number): Result {
+    const distance = Math.abs(this.moveHistory.length - turnToGo);
+    if (turnToGo === this.moveHistory.length) return Success.GO_TO_SUCCESS;
+    else if (this.moveHistory.length > turnToGo) {
+      for (let index = 0; index < distance; index++) {
+        this.undoMove();
+      }
+    } else if (this.moveHistory.length < turnToGo) {
+      for (let index = 0; index < distance; index++) {
+        this.redoMove();
+      }
+    }
+
+    return Success.GO_TO_SUCCESS;
   }
   inputMove(move: Move): Result {
     if (
@@ -125,6 +158,7 @@ export class Board {
 
     this.makeMove(move);
     this._listOfMoves.push(move);
+    this._undoList = [];
     this.generateCurrentLegalMoves();
 
     const gameState = this.checkWin();
@@ -236,11 +270,14 @@ export enum Error {
   NOT_VALID_SQUARE = 'Not a valid square.',
   NOT_LEGAL_MOVE = 'Not a legal move.',
   NO_MOVE_TO_UNDO = 'No move left to Undo.',
+  NO_MOVE_TO_REDO = 'No move left to Redo.',
 }
 
 export enum Success {
   MOVE_SUCCESS = 'Successfully moved piece.',
-  UNDO_SUCCESS = 'Successfully undid previous move.',
+  UNDO_SUCCESS = 'Successfully undid move.',
+  REDO_SUCCESS = 'Successfully redid move.',
+  GO_TO_SUCCESS = 'Successfully restored turn.',
 }
 
 export enum GameState {

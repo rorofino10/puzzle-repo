@@ -7,6 +7,11 @@
   </p>
   <button (click)="inputRandomMove()">Random Move</button>
   <button (click)="undoMove()">Undo Move</button>
+  <button (click)="goToMove(numberInput.valueAsNumber)">
+    Go To Move
+    <input #numberInput type="number" />
+  </button>
+  <button (click)="redoMove()">Redo Move</button>
   <button (click)="resetBoard()">Reset Board</button>
   <button (click)="logMoves()">Log Moves</button>
 </div>

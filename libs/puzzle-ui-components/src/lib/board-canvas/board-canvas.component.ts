@@ -2,7 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   Board,
+  Error,
   FILE,
+  GameState,
   Index,
   IndexToSquare,
   Move,
@@ -37,8 +39,12 @@ export class BoardCanvasComponent {
     this.selectedSquare = Square(rank, file);
     const move = Move(this.selectedPieceSquare, this.selectedSquare);
     const res = this.inputMove(move);
-    if (res !== Success.MOVE_SUCCESS) return;
+    if (Object.values(Error).includes(res as Error)) {
+      console.error(res);
+      return;
+    }
     console.log(this.board.moveHistory.length, MoveToString(move));
+    if (res === GameState.WIN) console.log(res);
   }
 
   inputMove(move: Move): Result {

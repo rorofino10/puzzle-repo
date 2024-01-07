@@ -84,11 +84,17 @@ export class LevelNComponent {
   undoMove(): void {
     this.board.undoMove();
   }
+  goToMove(turn: number): void {
+    this.board.goToMove(turn);
+  }
+  redoMove(): void {
+    this.board.redoMove();
+  }
   resetBoard(): void {
     this.board = new Board(
-      piecesBitBoard,
-      golden_piecesBitBoard,
-      golden_squaresBitBoard
+      this.normie_pieces_bitboard,
+      this.golden_piece_bitboard,
+      this.golden_square_bitboard
     );
   }
 
@@ -96,11 +102,15 @@ export class LevelNComponent {
     const moveHistoryString = this.board.moveHistory.map((move) =>
       MoveToString(move)
     );
+    const undoHistoryString = this.board.undoHistory.map((move) =>
+      MoveToString(move)
+    );
     console.log(moveHistoryString);
+    console.log(undoHistoryString);
   }
 
   ngOnInit(): void {
-    console.log(piecesBitBoard.getBoard());
+    // console.log(piecesBitBoard.getBoard());
   }
 }
 

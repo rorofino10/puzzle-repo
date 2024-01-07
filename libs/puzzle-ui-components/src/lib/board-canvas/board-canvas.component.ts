@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   Board,
@@ -24,6 +24,8 @@ import {
 })
 export class BoardCanvasComponent {
   @Input({ required: true }) board!: Board;
+  @Output() moveEvent = new EventEmitter<Move>();
+
   squares = Array(64)
     .fill(0)
     .map((x, i) => IndexToSquare(i as Index));
@@ -38,19 +40,12 @@ export class BoardCanvasComponent {
     if (!this.selectedPieceSquare) return;
     this.selectedSquare = Square(rank, file);
     const move = Move(this.selectedPieceSquare, this.selectedSquare);
-    const res = this.inputMove(move);
-    if (Object.values(Error).includes(res as Error)) {
-      console.error(res);
-      return;
-    }
-    console.log(this.board.moveHistory.length, MoveToString(move));
-    if (res === GameState.WIN) console.log(res);
-  }
-
-  inputMove(move: Move): Result {
+    this.sendMove(move);
     this.selectedPieceSquare = null;
     this.selectedSquare = null;
+  }
 
-    return this.board.inputMove(move);
+  sendMove(move: Move) {
+    this.moveEvent.emit(move);
   }
 }

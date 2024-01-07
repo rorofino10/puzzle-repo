@@ -1,16 +1,18 @@
-<board-canvas [board]="board" />
-<div>
-  <p>
-    {{ normie_pieces_bitboard.getBoard() }} |
-    {{ golden_piece_bitboard.getBoard() }} |
-    {{ golden_square_bitboard.getBoard() }}
-  </p>
+<board-canvas [board]="board" (moveEvent)="inputMove($event)" />
+<p>
+  {{ normie_pieces_bitboard.getBoard() }} |
+  {{ golden_piece_bitboard.getBoard() }} |
+  {{ golden_square_bitboard.getBoard() }}
+</p>
+<div class="actions">
   <button (click)="inputRandomMove()">Random Move</button>
   <button (click)="undoMove()">Undo Move</button>
-  <button (click)="goToMove(numberInput.valueAsNumber)">
-    Go To Move
+
+  <div>
+    <button (click)="goToMove(numberInput.valueAsNumber)">Go To Move</button>
     <input #numberInput type="number" />
-  </button>
+  </div>
+
   <button (click)="redoMove()">Redo Move</button>
   <button (click)="resetBoard()">Reset Board</button>
   <button (click)="logMoves()">Log Moves</button>

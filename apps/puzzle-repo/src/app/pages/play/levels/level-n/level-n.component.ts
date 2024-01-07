@@ -8,6 +8,7 @@ import {
 } from '@puzzle-repo/puzzle-ui-components';
 import {
   Board,
+  Error,
   FILE,
   GameState,
   Move,
@@ -80,6 +81,17 @@ export class LevelNComponent {
     }
     const res = this.board.inputMove(move);
     res === GameState.WIN ? console.log('YOU WONN') : true;
+  }
+
+  inputMove(move: Move): void {
+    const res = this.board.inputMove(move);
+
+    if (Object.values(Error).includes(res as Error)) {
+      console.error(res);
+      return;
+    }
+    console.log(this.board.moveHistory.length, MoveToString(move));
+    if (res === GameState.WIN) console.log(res);
   }
   undoMove(): void {
     this.board.undoMove();

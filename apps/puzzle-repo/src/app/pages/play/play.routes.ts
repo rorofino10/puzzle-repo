@@ -14,12 +14,10 @@ export const PlayRoutes: Routes = [
       ),
   },
   {
-    path: 'level/:id',
-    loadComponent: () =>
-      import('./levels/level-n/level-n.component').then(
-        (x) => x.LevelNComponent
-      ),
+    path: 'level/12',
+    redirectTo: 'level/90194378753/4/18',
   },
+
   {
     path: 'level/:normie_pieces/:golden_piece/:golden_square',
     loadComponent: () =>

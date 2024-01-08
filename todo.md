@@ -1,4 +1,0 @@
-- Reach consensus on win condition for multiple Golden Pieces and Squares
-- Make a better UI
-- Pass Bitboard from URL in Board Notation
-- Make Bitboard from Array of Pieces in Board Notation

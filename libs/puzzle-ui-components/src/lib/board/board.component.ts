@@ -60,7 +60,7 @@ export class BoardComponent {
     this.board.redoMove();
   }
   resetBoard(): void {
-    this.board.goToMove(0);
+    this.board.resetBoard();
   }
 
   logMoves(): void {

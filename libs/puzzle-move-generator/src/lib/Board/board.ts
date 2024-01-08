@@ -130,6 +130,11 @@ export class Board {
 
     return Success.GO_TO_SUCCESS;
   }
+  resetBoard(): void {
+    this.goToMove(0);
+    this._listOfMoves = [];
+    this._undoList = [];
+  }
   inputMove(move: Move): Result {
     if (
       !this.isValidSquare(move.origin) ||

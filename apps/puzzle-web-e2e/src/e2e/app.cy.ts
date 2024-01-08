@@ -1,6 +1,6 @@
 import { getGreeting } from '../support/app.po';
 
-describe('puzzle-repo-e2e', () => {
+describe('puzzle-web-e2e', () => {
   beforeEach(() => cy.visit('/'));
 
   it('should display welcome message', () => {

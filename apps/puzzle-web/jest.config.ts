@@ -1,9 +1,9 @@
 /* eslint-disable */
 export default {
-  displayName: 'puzzle-repo',
+  displayName: 'puzzle-web',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  coverageDirectory: '../../coverage/apps/puzzle-repo',
+  coverageDirectory: '../../coverage/apps/puzzle-web',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',

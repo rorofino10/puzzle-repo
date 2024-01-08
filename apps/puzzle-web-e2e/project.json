@@ -1,22 +1,22 @@
 {
-  "name": "puzzle-repo-e2e",
+  "name": "puzzle-web-e2e",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "sourceRoot": "apps/puzzle-repo-e2e/src",
+  "sourceRoot": "apps/puzzle-web-e2e/src",
   "targets": {
     "e2e": {
       "executor": "@nx/cypress:cypress",
       "options": {
-        "cypressConfig": "apps/puzzle-repo-e2e/cypress.config.ts",
+        "cypressConfig": "apps/puzzle-web-e2e/cypress.config.ts",
         "testingType": "e2e",
-        "devServerTarget": "puzzle-repo:serve:development"
+        "devServerTarget": "puzzle-web:serve:development"
       },
       "configurations": {
         "production": {
-          "devServerTarget": "puzzle-repo:serve:production"
+          "devServerTarget": "puzzle-web:serve:production"
         },
         "ci": {
-          "devServerTarget": "puzzle-repo:serve-static"
+          "devServerTarget": "puzzle-web:serve-static"
         }
       }
     },
@@ -26,5 +26,5 @@
     }
   },
   "tags": [],
-  "implicitDependencies": ["puzzle-repo"]
+  "implicitDependencies": ["puzzle-web"]
 }

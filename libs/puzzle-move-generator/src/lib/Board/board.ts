@@ -39,7 +39,7 @@ export class Board {
     golden_squares: BitBoard
   ) {
     this.normie_pieces_bitboard = new BitBoard(
-      normie_pieces.getBoard() ^ golden_pieces.getBoard()
+      normie_pieces.getBoard() & ~golden_pieces.getBoard()
     );
     this.golden_pieces_bitboard = golden_pieces;
     this.golden_squares_bitboard = golden_squares;

@@ -1,10 +1,9 @@
 import { Suite } from 'benchmark';
-import { Board } from './Board/board';
-import { BitBoard } from './BitBoard/bitboard';
-import { FILE } from './Square/file';
-import { RANK } from './Square/rank';
-import { RankFileToIndex, Square } from './Square/square';
-import { Move } from './move/move';
+import { Board } from './lib/Board/board';
+import { BitBoard } from './lib/BitBoard/bitboard';
+import { FILE } from './lib/Square/file';
+import { RANK } from './lib/Square/rank';
+import { RankFileToIndex } from './lib/Square/square';
 
 const suite = new Suite();
 

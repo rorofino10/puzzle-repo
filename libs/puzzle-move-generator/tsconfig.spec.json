@@ -10,5 +10,5 @@
     "src/**/*.test.ts",
     "src/**/*.spec.ts",
     "src/**/*.d.ts"
-, "src/lib/puzzle-move-generator.benchmark.ts"  ]
+, "src/puzzle-move-generator.benchmark.ts"  ]
 }

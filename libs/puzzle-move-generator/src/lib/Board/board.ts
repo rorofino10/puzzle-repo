@@ -15,7 +15,6 @@ import { Index, Square, SquareToIndex } from '../Square/square';
 import { CompareMove, Move } from '../move/move';
 
 export class Board {
-  private _turn = 1;
   private _listOfMoves: Move[] = [];
   private _undoList: Move[] = [];
   private _currentLegalMoves: Move[] = [];
@@ -28,10 +27,19 @@ export class Board {
   private normie_pieces_bitboard: BitBoard;
   private golden_pieces_bitboard: BitBoard;
   private golden_squares_bitboard: BitBoard;
+  // prettier-ignore
+  private get occupancy(): BitBoard { return new BitBoard(this.normie_pieces_bitboard.getBoard() | this.golden_pieces_bitboard.getBoard());}
 
-  normie_pieces: Square[] = [];
-  golden_pieces: Square[] = [];
-  golden_squares: Square[] = [];
+  private _normie_pieces: Square[] = [];
+  private _golden_pieces: Square[] = [];
+  private _golden_squares: Square[] = [];
+
+  // prettier-ignore
+  get normie_pieces(): Square[] { return this._normie_pieces;}
+  // prettier-ignore
+  get golden_pieces(): Square[] { return this._golden_pieces; }
+  // prettier-ignore
+  get golden_squares(): Square[] { return this._golden_squares; }
 
   constructor(
     normie_pieces: BitBoard,
@@ -47,13 +55,13 @@ export class Board {
     this.generateCurrentLegalMoves();
   }
   private updateBitboardToSquares() {
-    this.normie_pieces = extractSquaresFromBitboard(
+    this._normie_pieces = extractSquaresFromBitboard(
       this.normie_pieces_bitboard
     );
-    this.golden_pieces = extractSquaresFromBitboard(
+    this._golden_pieces = extractSquaresFromBitboard(
       this.golden_pieces_bitboard
     );
-    this.golden_squares = extractSquaresFromBitboard(
+    this._golden_squares = extractSquaresFromBitboard(
       this.golden_squares_bitboard
     );
   }
@@ -66,35 +74,11 @@ export class Board {
       : GameState.UNDEFINED;
   }
 
-  // Getters fot Bitboards
-  get NormiePiecesBitboard(): BitBoard {
-    return this.normie_pieces_bitboard;
-  }
-  get GoldenPiecesBitboard(): BitBoard {
-    return this.golden_pieces_bitboard;
-  }
-  get GoldenSquaresBitboard(): BitBoard {
-    return this.golden_squares_bitboard;
-  }
-  get OccupancyBitboard(): BitBoard {
-    return or(this.normie_pieces_bitboard, this.golden_pieces_bitboard);
-  }
-
-  get NormiePiecesSquares(): Square[] {
-    return extractSquaresFromBitboard(this.normie_pieces_bitboard);
-  }
-  get GoldenPiecesSquares(): Square[] {
-    return extractSquaresFromBitboard(this.golden_pieces_bitboard);
-  }
-  get GoldenSquares(): Square[] {
-    return extractSquaresFromBitboard(this.golden_squares_bitboard);
-  }
-
   get gameState(): GameState {
     return this._gameState;
   }
   get turn(): number {
-    return this._turn;
+    return this.moveHistory.length;
   }
   get moveHistory(): Move[] {
     return this._listOfMoves;
@@ -216,7 +200,7 @@ export class Board {
 
   public generateCurrentLegalMoves() {
     this._currentLegalMoves = [];
-    const pieces_squares = extractSquaresFromBitboard(this.OccupancyBitboard);
+    const pieces_squares = extractSquaresFromBitboard(this.occupancy);
     pieces_squares.forEach((piece_square) => {
       const legal_moves_from_square =
         this.generateLegalMovesFromSquare(piece_square);
@@ -238,7 +222,7 @@ export class Board {
     const piece_bitboard = BitBoard.empty().setBit(index).getBoard();
     const piece_bitboard_reversed = reverse_uint64(piece_bitboard);
 
-    const occupancy = this.OccupancyBitboard.getBoard();
+    const occupancy = this.occupancy.getBoard();
     const rank_mask = BitBoard.rankMask(getRank(index)).getBoard();
     const file_mask = BitBoard.fileMask(getFile(index)).getBoard();
 

@@ -126,6 +126,7 @@ export class Board {
     return Success.REDO_SUCCESS;
   }
   goToMove(turnToGo: number): Result {
+    if (this.moveHistory.length === 0) return Error.NO_MOVE_TO_GO;
     const distance = Math.abs(this.moveHistory.length - turnToGo);
     if (turnToGo === this.moveHistory.length) return Success.GO_TO_SUCCESS;
     else if (this.moveHistory.length > turnToGo) {
@@ -133,6 +134,8 @@ export class Board {
         this.undoMove();
       }
     } else if (this.moveHistory.length < turnToGo) {
+      if (this.undoHistory.length < turnToGo - this.moveHistory.length)
+        return Error.NO_MOVE_TO_GO;
       for (let index = 0; index < distance; index++) {
         this.redoMove();
       }
@@ -158,7 +161,12 @@ export class Board {
 
     this.makeMove(move);
     this._listOfMoves.push(move);
-    this._undoList = [];
+    const lastUndoMove = this.undoHistory.pop();
+    if (lastUndoMove) {
+      if (!CompareMove(move, lastUndoMove)) {
+        this._undoList = [];
+      }
+    }
     this.generateCurrentLegalMoves();
 
     const gameState = this.checkWin();
@@ -271,6 +279,7 @@ export enum Error {
   NOT_LEGAL_MOVE = 'Not a legal move.',
   NO_MOVE_TO_UNDO = 'No move left to Undo.',
   NO_MOVE_TO_REDO = 'No move left to Redo.',
+  NO_MOVE_TO_GO = 'No move to go to.',
 }
 
 export enum Success {

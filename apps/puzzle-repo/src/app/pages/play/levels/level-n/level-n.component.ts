@@ -97,10 +97,14 @@ export class LevelNComponent {
     this.board.undoMove();
   }
   goToMove(turn: number): void {
-    this.board.goToMove(turn);
-    const lastMoveString = MoveToString(
-      this.board.moveHistory[this.board.moveHistory.length - 1]
-    );
+    const res = this.board.goToMove(turn);
+    if (Object.values(Error).includes(res as Error)) {
+      console.error(res);
+      return;
+    }
+    const lastMove = this.board.moveHistory[this.board.moveHistory.length - 1];
+    if (!lastMove) return;
+    const lastMoveString = MoveToString(lastMove);
     console.log(this.board.moveHistory.length, lastMoveString);
   }
   redoMove(): void {

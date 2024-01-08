@@ -24,6 +24,4 @@ Nx comes with local caching already built-in (check your `nx.json`). On CI you m
 
 - Reach consensus on win condition for multiple Golden Pieces and Squares
 - Make a better UI
-- Pass Bitboard from URL in Board Notation
-- Make Bitboard from Array of Pieces in Board Notation
 - Use Ngx-Animate-CSS-Grid to animate movement of pieces

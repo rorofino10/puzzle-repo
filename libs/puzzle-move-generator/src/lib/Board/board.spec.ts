@@ -3,7 +3,7 @@ import { FILE } from '../Square/file';
 import { RANK } from '../Square/rank';
 import { RankFileToIndex, Square } from '../Square/square';
 import { Move } from '../move/move';
-import { Board, Error, Success } from './board';
+import { Board, BoardError, BoardSuccess } from './board';
 
 const pieces = BitBoard.empty()
   // .setBit(RankFileToIndex(0, 0))
@@ -92,7 +92,7 @@ describe('board', () => {
     const result = testingBoard.undoMove();
     expect(testingBoard.currentLegalMoves.length).toBe(6);
     expect(testingBoard.moveHistory.length).toBe(0);
-    expect(result).toEqual(Success.UNDO_SUCCESS);
+    expect(result).toEqual(BoardSuccess.UNDO_SUCCESS);
   });
   it('Should not undo previous move ', () => {
     const testingBitBoard = BitBoard.empty()
@@ -110,7 +110,7 @@ describe('board', () => {
     const result = testingBoard.undoMove();
     expect(testingBoard.currentLegalMoves.length).toBe(6);
     expect(testingBoard.moveHistory.length).toBe(0);
-    expect(result).toEqual(Error.NO_MOVE_TO_UNDO);
+    expect(result).toEqual(BoardError.NO_MOVE_TO_UNDO);
   });
   test('Level 12 ', () => {
     const piecesBitBoard = BitBoard.empty()

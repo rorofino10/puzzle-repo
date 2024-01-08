@@ -1,6 +1,13 @@
+import { BoardError, isBoardError } from '../Board/board';
 import { FILE } from '../Square/file';
 import { RANK } from '../Square/rank';
-import { Index, IndexToSquare, Square, SquareToIndex } from '../Square/square';
+import {
+  Index,
+  IndexToSquare,
+  Square,
+  SquareToIndex,
+  StringToSquare,
+} from '../Square/square';
 import { Move } from '../move/move';
 import { BitReverseTable256 } from './bit-reverse-table';
 
@@ -308,4 +315,33 @@ export const surrounding_bits_uint64 = (input: bigint) => {
   result &= ~input;
 
   return result;
+};
+
+export const BitBoardFromArrayPieceString = (
+  pieces: string[]
+): BitBoard | BoardError => {
+  let board = BitBoard.empty();
+  pieces.forEach((piece) => {
+    const index = SquareToIndex(StringToSquare(piece));
+    board = board.setBit(index);
+  });
+  return board;
+};
+
+export const BoardStringToArrayPiecesString = (
+  boardString: string
+): string[] | BoardError => {
+  if (boardString.length % 2 !== 0) return BoardError.WRONG_INPUT;
+  const piecePositions = boardString.match(/.{1,2}/g);
+  return piecePositions ? piecePositions : BoardError.WRONG_INPUT;
+};
+
+export const BoardStringToBitboard = (boardString: string): BitBoard => {
+  const arrayPieces = BoardStringToArrayPiecesString(boardString);
+  if (isBoardError(arrayPieces)) return BitBoard.empty();
+  const bitboardFromArray = BitBoardFromArrayPieceString(
+    arrayPieces as string[]
+  );
+  if (isBoardError(bitboardFromArray)) return BitBoard.empty();
+  return bitboardFromArray as BitBoard;
 };

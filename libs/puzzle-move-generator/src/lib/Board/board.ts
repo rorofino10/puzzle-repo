@@ -18,7 +18,7 @@ export class Board {
   private _listOfMoves: Move[] = [];
   private _undoList: Move[] = [];
   private _currentLegalMoves: Move[] = [];
-  private _gameState: GameState = GameState.UNDEFINED;
+  private _gameState: BoardState = BoardState.UNDEFINED;
 
   readonly WIDTH = 8;
   readonly HEIGHT = 8;
@@ -65,16 +65,16 @@ export class Board {
       this.golden_squares_bitboard
     );
   }
-  private checkWin(): GameState {
+  private checkWin(): BoardState {
     return and(
       this.golden_pieces_bitboard,
       this.golden_squares_bitboard
     ).getBoard() === this.golden_squares_bitboard.getBoard()
-      ? GameState.WIN
-      : GameState.UNDEFINED;
+      ? BoardState.WIN
+      : BoardState.UNDEFINED;
   }
 
-  get gameState(): GameState {
+  get gameState(): BoardState {
     return this._gameState;
   }
   get turn(): number {
@@ -90,66 +90,68 @@ export class Board {
     return this._currentLegalMoves;
   }
 
-  undoMove(): Result {
+  undoMove(): BoardResult {
     const lastMove = this._listOfMoves.pop();
-    if (!lastMove) return Error.NO_MOVE_TO_UNDO;
+    if (!lastMove) return BoardError.NO_MOVE_TO_UNDO;
 
     this.makeMove(Move(lastMove.destination, lastMove.origin));
     this.generateCurrentLegalMoves();
     this._undoList.push(lastMove);
-    return Success.UNDO_SUCCESS;
+    return BoardSuccess.UNDO_SUCCESS;
   }
 
-  redoMove(): Result {
-    if (!this._undoList) return Error.NO_MOVE_TO_REDO;
+  redoMove(): BoardResult {
+    if (!this._undoList) return BoardError.NO_MOVE_TO_REDO;
     const firstMove = this._undoList.pop();
-    if (!firstMove) return Error.NO_MOVE_TO_REDO;
+    if (!firstMove) return BoardError.NO_MOVE_TO_REDO;
     this.makeMove(firstMove);
 
     this._listOfMoves.push(firstMove);
 
     this.generateCurrentLegalMoves();
-    return Success.REDO_SUCCESS;
+    return BoardSuccess.REDO_SUCCESS;
   }
-  goToMove(turnToGo: number): Result {
+  goToMove(turnToGo: number): BoardResult {
     if (this.moveHistory.length + this.undoHistory.length === 0)
-      return Error.NO_MOVE_TO_GO;
+      return BoardError.NO_MOVE_TO_GO;
     const distance = Math.abs(this.moveHistory.length - turnToGo);
-    if (turnToGo === this.moveHistory.length) return Success.GO_TO_SUCCESS;
+    if (turnToGo === this.moveHistory.length) return BoardSuccess.GO_TO_SUCCESS;
     else if (this.moveHistory.length > turnToGo) {
       for (let index = 0; index < distance; index++) {
         this.undoMove();
       }
     } else if (this.moveHistory.length < turnToGo) {
       if (this.undoHistory.length < turnToGo - this.moveHistory.length)
-        return Error.NO_MOVE_TO_GO;
+        return BoardError.NO_MOVE_TO_GO;
       for (let index = 0; index < distance; index++) {
         this.redoMove();
       }
     }
 
-    return Success.GO_TO_SUCCESS;
+    return BoardSuccess.GO_TO_SUCCESS;
   }
   resetBoard(): void {
     this.goToMove(0);
     this._listOfMoves = [];
     this._undoList = [];
   }
-  inputMove(move: Move): Result {
+  inputMove(move: Move): BoardResult {
     if (
       !this.isValidSquare(move.origin) ||
       !this.isValidSquare(move.destination)
     )
-      return Error.NOT_VALID_SQUARE;
+      return BoardError.NOT_VALID_SQUARE;
 
-    if (!this.isPieceOnSquare(move.origin)) return Error.COULD_NOT_FIND_PIECE;
-    if (this.isPieceOnSquare(move.destination)) return Error.POSITION_OCCUPIED;
+    if (!this.isPieceOnSquare(move.origin))
+      return BoardError.COULD_NOT_FIND_PIECE;
+    if (this.isPieceOnSquare(move.destination))
+      return BoardError.POSITION_OCCUPIED;
 
     const isLegalMove = this._currentLegalMoves.find((legalMove) =>
       CompareMove(legalMove, move)
     );
 
-    if (!isLegalMove) return Error.NOT_LEGAL_MOVE;
+    if (!isLegalMove) return BoardError.NOT_LEGAL_MOVE;
 
     this.makeMove(move);
     this._listOfMoves.push(move);
@@ -162,10 +164,10 @@ export class Board {
     this.generateCurrentLegalMoves();
 
     const gameState = this.checkWin();
-    if (gameState === GameState.WIN) return GameState.WIN;
+    if (gameState === BoardState.WIN) return BoardState.WIN;
     this._gameState = gameState;
 
-    return Success.MOVE_SUCCESS;
+    return BoardSuccess.MOVE_SUCCESS;
   }
 
   private makeMove(move: Move): void {
@@ -264,7 +266,7 @@ export class Board {
   }
 }
 
-export enum Error {
+export enum BoardError {
   POSITION_OCCUPIED = 'There is already another piece in that location!',
   COULD_NOT_FIND_PIECE = 'No piece could be found in that location.',
   NOT_VALID_SQUARE = 'Not a valid square.',
@@ -272,19 +274,27 @@ export enum Error {
   NO_MOVE_TO_UNDO = 'No move left to Undo.',
   NO_MOVE_TO_REDO = 'No move left to Redo.',
   NO_MOVE_TO_GO = 'No move to go to.',
+  WRONG_INPUT = 'You submitted a wrong input.',
 }
 
-export enum Success {
+export enum BoardSuccess {
   MOVE_SUCCESS = 'Successfully moved piece.',
   UNDO_SUCCESS = 'Successfully undid move.',
   REDO_SUCCESS = 'Successfully redid move.',
   GO_TO_SUCCESS = 'Successfully restored turn.',
 }
 
-export enum GameState {
+export enum BoardState {
   WIN = 'You won the game',
   UNDEFINED = 'Undefined',
   LOST = 'You lost',
 }
 
-export type Result = Success | Error | GameState;
+export type BoardResult = BoardSuccess | BoardError | BoardState;
+
+export const isBoardError = (val: any): boolean => {
+  if (Object.values(BoardError).includes(val as BoardError)) {
+    return true;
+  }
+  return false;
+};

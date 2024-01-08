@@ -15,7 +15,7 @@ export const PlayRoutes: Routes = [
   },
   {
     path: 'level/12',
-    redirectTo: 'level/90194378753/4/18',
+    redirectTo: 'level/A1A3A5C5E5/E1/C3',
   },
 
   {

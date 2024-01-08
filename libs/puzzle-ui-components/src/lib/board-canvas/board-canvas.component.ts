@@ -2,17 +2,12 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   Board,
-  Error,
   FILE,
-  GameState,
   Index,
   IndexToSquare,
   Move,
-  MoveToString,
   RANK,
-  Result,
   Square,
-  Success,
 } from '@puzzle-repo/puzzle-move-generator';
 
 @Component({

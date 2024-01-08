@@ -2,13 +2,14 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   Board,
-  GameState,
+  BoardState,
   Move,
   MoveToString,
-  Error,
+  BoardError,
 } from '@puzzle-repo/puzzle-move-generator';
 import { BoardCanvasComponent } from '../board-canvas/board-canvas.component';
 import { BoardInfoComponent } from '../board-info/board-info.component';
+import { isBoardError } from 'libs/puzzle-move-generator/src/lib/Board/board';
 
 @Component({
   selector: 'board',
@@ -29,25 +30,25 @@ export class BoardComponent {
       return;
     }
     const res = this.board.inputMove(move);
-    res === GameState.WIN ? console.log('YOU WONN') : true;
+    res === BoardState.WIN ? console.log('YOU WONN') : true;
   }
 
   inputMove(move: Move): void {
     const res = this.board.inputMove(move);
 
-    if (Object.values(Error).includes(res as Error)) {
+    if (Object.values(BoardError).includes(res as BoardError)) {
       console.error(res);
       return;
     }
     console.log(this.board.moveHistory.length, MoveToString(move));
-    if (res === GameState.WIN) console.log(res);
+    if (res === BoardState.WIN) console.log(res);
   }
   undoMove(): void {
     this.board.undoMove();
   }
   goToMove(turn: number): void {
     const res = this.board.goToMove(turn);
-    if (Object.values(Error).includes(res as Error)) {
+    if (isBoardError(res)) {
       console.error(res);
       return;
     }

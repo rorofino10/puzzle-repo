@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Board, BitBoard } from '@puzzle-repo/puzzle-move-generator';
 import { BoardComponent } from '@puzzle-repo/puzzle-ui-components';
+import { BoardStringToBitboard } from 'libs/puzzle-move-generator/src/lib/BitBoard/bitboard';
 
 @Component({
   selector: 'puzzle-repo-level-n',
@@ -14,14 +15,14 @@ import { BoardComponent } from '@puzzle-repo/puzzle-ui-components';
 export class LevelNComponent {
   private activatedRoute = inject(ActivatedRoute);
 
-  normie_pieces_bitboard = new BitBoard(
-    BigInt(this.activatedRoute.snapshot.params['normie_pieces'])
+  normie_pieces_bitboard = BoardStringToBitboard(
+    this.activatedRoute.snapshot.params['normie_pieces']
   );
-  golden_piece_bitboard = BitBoard.empty().setBit(
-    Number(this.activatedRoute.snapshot.params['golden_piece'])
+  golden_piece_bitboard = BoardStringToBitboard(
+    this.activatedRoute.snapshot.params['golden_piece']
   );
-  golden_square_bitboard = BitBoard.empty().setBit(
-    Number(this.activatedRoute.snapshot.params['golden_square'])
+  golden_square_bitboard = BoardStringToBitboard(
+    this.activatedRoute.snapshot.params['golden_square']
   );
 
   board = new Board(

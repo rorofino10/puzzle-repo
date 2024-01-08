@@ -1,5 +1,7 @@
 import {
   BitBoard,
+  BitBoardFromArrayPieceString,
+  BoardStringToArrayPiecesString,
   and,
   mergeBytesIntoUint64,
   or,
@@ -163,6 +165,16 @@ describe('BitBoard', () => {
 
     expect(uint64.toString(2)).toEqual(
       '1111111100000000111111111111111100000000111111110000000011111111'
+    );
+  });
+  test('Get Bitboard from Board String', () => {
+    const boardString = 'A1B1C1';
+    const piecesString = BoardStringToArrayPiecesString(boardString);
+    const bitboard = BitBoardFromArrayPieceString(piecesString as string[]);
+    const expectedBitboard = BitBoard.empty().setBit(0).setBit(1).setBit(2);
+
+    expect((bitboard as BitBoard).getBoard().toString()).toEqual(
+      expectedBitboard.getBoard().toString()
     );
   });
 

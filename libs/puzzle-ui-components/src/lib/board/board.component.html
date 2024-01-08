@@ -1,0 +1,14 @@
+<board-canvas [board]="board" (moveEvent)="inputMove($event)" />
+<div class="actions">
+  <button (click)="inputRandomMove()">Random Move</button>
+  <button (click)="undoMove()">Undo Move</button>
+
+  <div>
+    <button (click)="goToMove(numberInput.valueAsNumber)">Go To Move</button>
+    <input #numberInput type="number" />
+  </div>
+
+  <button (click)="redoMove()">Redo Move</button>
+  <button (click)="resetBoard()">Reset Board</button>
+  <button (click)="logMoves()">Log Moves</button>
+</div>

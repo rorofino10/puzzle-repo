@@ -1,15 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import {
-  Board,
-  Error,
-  GameState,
-  Move,
-  MoveToString,
-} from '@puzzle-repo/puzzle-move-generator';
-import { BitBoard } from 'libs/puzzle-move-generator/src/lib/BitBoard/bitboard';
-import { BoardComponent } from 'libs/puzzle-ui-components/src/lib/board/board.component';
+import { Board, BitBoard } from '@puzzle-repo/puzzle-move-generator';
+import { BoardComponent } from '@puzzle-repo/puzzle-ui-components';
 
 @Component({
   selector: 'puzzle-repo-level-n',

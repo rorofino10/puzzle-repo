@@ -10,3 +10,4 @@ export {
 export { FILE } from './lib/Square/file';
 export { RANK } from './lib/Square/rank';
 export { Board, Result, Success, Error, GameState } from './lib/Board/board';
+export { BitBoard } from './lib/BitBoard/bitboard';

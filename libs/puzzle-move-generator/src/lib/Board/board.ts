@@ -69,7 +69,7 @@ export class Board {
     return and(
       this.golden_pieces_bitboard,
       this.golden_squares_bitboard
-    ).getBoard() > 0
+    ).getBoard() === this.golden_squares_bitboard.getBoard()
       ? GameState.WIN
       : GameState.UNDEFINED;
   }
@@ -112,7 +112,8 @@ export class Board {
     return Success.REDO_SUCCESS;
   }
   goToMove(turnToGo: number): Result {
-    if (this.moveHistory.length === 0) return Error.NO_MOVE_TO_GO;
+    if (this.moveHistory.length + this.undoHistory.length === 0)
+      return Error.NO_MOVE_TO_GO;
     const distance = Math.abs(this.moveHistory.length - turnToGo);
     if (turnToGo === this.moveHistory.length) return Success.GO_TO_SUCCESS;
     else if (this.moveHistory.length > turnToGo) {

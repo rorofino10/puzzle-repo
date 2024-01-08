@@ -1,1 +1,20 @@
-<p>board-info works!</p>
+<main>
+  <h1>Board Info</h1>
+  <section class="moves">
+    @for (move of allMovesHistory; track $index) {
+    <button
+      (click)="sendGoTo($index + 1)"
+      [ngClass]="{
+        highlighted: $index + 1 === board.moveHistory.length
+      }"
+    >
+      {{ $index + 1 }} {{ MoveToString(move) }}
+    </button>
+    }
+  </section>
+  <section class="actions">
+    <button (click)="sendUndo()">UNDO</button>
+    <button (click)="sendRedo()">REDO</button>
+    <button (click)="sendReset()">RESET</button>
+  </section>
+</main>

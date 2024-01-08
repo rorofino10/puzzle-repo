@@ -7,7 +7,6 @@ import {
   MoveToString,
   Error,
 } from '@puzzle-repo/puzzle-move-generator';
-import { BitBoard } from 'libs/puzzle-move-generator/src/lib/BitBoard/bitboard';
 import { BoardCanvasComponent } from '../board-canvas/board-canvas.component';
 import { BoardInfoComponent } from '../board-info/board-info.component';
 
@@ -20,6 +19,7 @@ import { BoardInfoComponent } from '../board-info/board-info.component';
 })
 export class BoardComponent {
   @Input({ required: true }) board!: Board;
+  @Input({ required: true }) showInfo!: boolean;
 
   inputRandomMove(): void {
     const moves = this.board.currentLegalMoves;

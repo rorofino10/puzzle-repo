@@ -1,6 +1,7 @@
 .wrapper {
     aspect-ratio: 1;
     display: grid;
+    width: min(412px, 50vw);
     grid-template-columns: repeat(8, 1fr);
     grid-template-rows: repeat(8, 1fr);
     background-color: #4b7399;
@@ -11,14 +12,14 @@
 
 .piece {
     transition: background-color 0.5s;
-    width: 50px;
+    width: 100%;
     border-radius: 100%;
     aspect-ratio: 1;
     display: block;
     background-color: #4b7399;
 }
 .square {
-    width: 50px;
+    width: 100%;
     border: black solid 1px;
     transition: all 0.5s;
     aspect-ratio: 1;

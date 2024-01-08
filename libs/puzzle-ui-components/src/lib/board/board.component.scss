@@ -4,6 +4,10 @@
     align-items: center;
     flex-direction: column;
 }
+main {
+    display: flex;
+    flex-direction: row;
+}
 .actions {
     width: 100vw;
     display: flex;

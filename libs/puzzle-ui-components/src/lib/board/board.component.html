@@ -1,5 +1,16 @@
-<board-canvas [board]="board" (moveEvent)="inputMove($event)" />
-<div class="actions">
+<main>
+  <board-canvas [board]="board" (moveEvent)="inputMove($event)" />
+  @if (showInfo) {
+  <board-info
+    [board]="board"
+    (undoEvent)="undoMove()"
+    (resetEvent)="resetBoard()"
+    (redoEvent)="redoMove()"
+    (goToEvent)="goToMove($event)"
+  ></board-info>
+  }
+</main>
+<!-- <div class="actions">
   <button (click)="inputRandomMove()">Random Move</button>
   <button (click)="undoMove()">Undo Move</button>
 
@@ -11,4 +22,4 @@
   <button (click)="redoMove()">Redo Move</button>
   <button (click)="resetBoard()">Reset Board</button>
   <button (click)="logMoves()">Log Moves</button>
-</div>
+</div> -->

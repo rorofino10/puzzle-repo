@@ -83,6 +83,12 @@
         "buildTarget": "puzzle-web:build",
         "staticFilePath": "dist/apps/puzzle-web/browser"
       }
+    },
+    "deploy": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["nx build puzzle-web", "npx angular-cli-ghpages --dir ./dist/apps/puzzle-web/browser/ --no-silent"]
+      }
     }
   }
 }

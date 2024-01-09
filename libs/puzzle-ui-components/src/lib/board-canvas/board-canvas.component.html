@@ -10,7 +10,6 @@
   <div
     class="square"
     (click)="setSelectedSquare(square.file, square.rank)"
-    [style.backgroundColor]="'yellow'"
     [style.gridColumn]="square.file + 1"
     [style.gridRow]="board.HEIGHT - square.rank + 1"
   ></div>

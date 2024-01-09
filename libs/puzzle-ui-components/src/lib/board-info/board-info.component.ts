@@ -9,7 +9,6 @@ import {
   HlmCardTitleDirective,
 } from '@spartan-ng/ui-card-helm';
 import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
-import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
 
 @Component({
   selector: 'board-info',
@@ -22,7 +21,6 @@ import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
     HlmCardDirective,
     HlmCardTitleDirective,
     HlmButtonDirective,
-    HlmIconComponent,
   ],
   templateUrl: './board-info.component.html',
   styleUrl: './board-info.component.css',

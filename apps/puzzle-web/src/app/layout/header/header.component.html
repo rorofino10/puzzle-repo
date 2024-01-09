@@ -1,0 +1,19 @@
+<main class="bg-muted-foreground flex w-screen flex-row justify-between p-2">
+  <a
+    hlmBtn
+    target="_blank"
+    variant="link"
+    href="https://github.com/rorofino10/puzzle-repo"
+  >
+    GitHub
+  </a>
+  <button
+    hlmBtn
+    size="sm"
+    class="right"
+    variant="outline"
+    (click)="toggleDarkMode()"
+  >
+    @if ((themingService.theme$ | async) === 'dark' ) { Light } @else { Dark }
+  </button>
+</main>

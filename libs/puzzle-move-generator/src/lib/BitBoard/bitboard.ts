@@ -333,7 +333,9 @@ export const BoardStringToArrayPiecesString = (
 ): string[] | BoardError => {
   if (boardString.length % 2 !== 0) return BoardError.WRONG_INPUT;
   const piecePositions = boardString.match(/.{1,2}/g);
-  return piecePositions ? piecePositions : BoardError.WRONG_INPUT;
+  return piecePositions
+    ? piecePositions.map((pair) => pair.toUpperCase())
+    : BoardError.WRONG_INPUT;
 };
 
 export const BoardStringToBitboard = (boardString: string): BitBoard => {

@@ -1,12 +1,10 @@
 .wrapper {
     aspect-ratio: 1;
     display: grid;
-    width: min(412px, 50vw);
+    width: min(400px, 50vw);
     min-width: 250px;
     grid-template-columns: repeat(8, 1fr);
     grid-template-rows: repeat(8, 1fr);
-    background-color: #4b7399;
-    border: black solid 1px;
     justify-items: center;
     align-items: center;
 }
@@ -21,11 +19,12 @@
 }
 .square {
     width: 100%;
-    border: black solid 1px;
     transition: all 0.5s;
     aspect-ratio: 1;
     display: block;
     background-color: #eae9d2;
+    /* @apply shadow-[inset_-1px_1px] shadow-foreground; */
+    @apply outline outline-2 outline-foreground -outline-offset-1;
 }
 .piece:hover {
     background-color: red;

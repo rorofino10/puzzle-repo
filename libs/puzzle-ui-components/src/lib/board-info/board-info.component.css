@@ -1,27 +1,10 @@
-:host {
-    width: 200px;
-
-}
-main {
-    border-radius: 10px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #624F82;
-}
 .moves {
-    display: flex;
-    flex-direction: column;
     width: 90%;
     height: 250px;
-    background-color: #9F73AB;
-    border-radius: 5px;
-    overflow-y: auto;
 }
 .highlighted {
-    background-color: #A3C7D6;
+    @apply bg-secondary-foreground;
+    @apply text-secondary;
 }
 
 @media screen and (max-width: 830px) {
@@ -32,3 +15,7 @@ main {
         height: fit-content;
     }
   }
+
+.icon {
+    fill: --primary-foreground;
+}

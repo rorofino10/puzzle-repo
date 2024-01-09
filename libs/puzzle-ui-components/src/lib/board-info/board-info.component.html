@@ -1,8 +1,19 @@
-<main>
-  <h1>Board Info</h1>
-  <section class="moves">
+<section
+  class="rounded-xl h-full flex flex-col justify-between items-center"
+  hlmCard
+>
+  <div hlmCardHeader>
+    <h3 hlmCardTitle>Board Info</h3>
+  </div>
+  <section
+    hlmCardContent
+    class="bg-secondary p-0 flex flex-col rounded-xl overflow-y-auto moves"
+  >
     @for (move of allMovesHistory; track $index) {
     <button
+      hlmBtn
+      variant="outline"
+      class="w-full text-secondary-foreground"
       (click)="sendGoTo($index + 1)"
       [ngClass]="{
         highlighted: $index + 1 === board.moveHistory.length
@@ -12,9 +23,179 @@
     </button>
     }
   </section>
-  <section class="actions">
-    <button (click)="sendUndo()">UNDO</button>
-    <button (click)="sendRedo()">REDO</button>
-    <button (click)="sendReset()">RESET</button>
-  </section>
-</main>
+  <div hlmCardFooter class="justify-between pt-6">
+    <button hlmBtn size="icon" (click)="sendUndo()">
+      <svg
+        class="stroke-primary-foreground"
+        width="16"
+        height="16"
+        viewBox="0 0 4.2333333 4.2333333"
+        version="1.1"
+        id="svg5"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:svg="http://www.w3.org/2000/svg"
+      >
+        <defs id="defs2">
+          <marker
+            style="overflow: visible"
+            id="TriangleStart"
+            refX="0"
+            refY="0"
+            orient="auto-start-reverse"
+            markerWidth="1"
+            markerHeight="1.1560694"
+            viewBox="0 0 5.3244081 6.1553851"
+            preserveAspectRatio="xMidYMid"
+            markerUnits="userSpaceOnUse"
+          >
+            <path
+              transform="scale(0.5)"
+              style="
+                fill: context-stroke;
+                fill-rule: evenodd;
+                stroke: context-stroke;
+                stroke-width: 1pt;
+              "
+              d="M 5.77,0 -2.88,5 V -5 Z"
+              id="path135"
+            />
+          </marker>
+        </defs>
+        <g id="layer1" transform="translate(6059.8841,-12679.23)">
+          <path
+            style="
+              fill: none;
+              stroke-width: 0.66851;
+              stroke-linecap: round;
+              stroke-dasharray: none;
+              stroke-opacity: 1;
+              marker-end: url(#TriangleStart);
+            "
+            id="path398"
+            d="m 6059.5497,12681.347 a 1.7825664,1.7828199 0 0 1 -1.3968,1.74 1.7825664,1.7828199 0 0 1 -2.0014,-0.987 1.7825664,1.7828199 0 0 1 0.5304,-2.168 1.7825664,1.7828199 0 0 1 2.231,0.05"
+            transform="scale(-1,1)"
+          />
+        </g>
+      </svg>
+    </button>
+    <button hlmBtn size="icon" (click)="sendRedo()">
+      <svg
+        class="stroke-primary-foreground"
+        width="16"
+        height="16"
+        viewBox="0 0 4.2333333 4.2333333"
+        version="1.1"
+        id="svg5"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:svg="http://www.w3.org/2000/svg"
+      >
+        <defs id="defs2">
+          <marker
+            style="overflow: visible"
+            id="TriangleStart"
+            refX="0"
+            refY="0"
+            orient="auto-start-reverse"
+            markerWidth="1"
+            markerHeight="1.1560694"
+            viewBox="0 0 5.3244081 6.1553851"
+            preserveAspectRatio="xMidYMid"
+            markerUnits="userSpaceOnUse"
+          >
+            <path
+              transform="scale(0.5)"
+              style="
+                fill: context-stroke;
+                fill-rule: evenodd;
+                stroke: context-stroke;
+                stroke-width: 1pt;
+              "
+              d="M 5.77,0 -2.88,5 V -5 Z"
+              id="path135"
+            />
+          </marker>
+        </defs>
+        <g id="layer1" transform="translate(6059.8841,-12679.23)">
+          <path
+            style="
+              fill: none;
+              stroke-width: 0.66851;
+              stroke-linecap: round;
+              stroke-dasharray: none;
+              stroke-opacity: 1;
+              marker-end: url(#TriangleStart);
+            "
+            id="path398"
+            d="m -6055.985,12681.347 a 1.7825664,1.7828199 0 0 1 -1.3968,1.74 1.7825664,1.7828199 0 0 1 -2.0013,-0.987 1.7825664,1.7828199 0 0 1 0.5304,-2.168 1.7825664,1.7828199 0 0 1 2.2309,0.05"
+          />
+        </g>
+      </svg>
+    </button>
+    <button hlmBtn size="icon" variant="destructive" (click)="sendReset()">
+      <svg
+        class="stroke-primary-foreground"
+        width="16"
+        height="16"
+        viewBox="0 0 4.2333333 4.2333333"
+        version="1.1"
+        id="svg5"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:svg="http://www.w3.org/2000/svg"
+      >
+        <defs id="defs2">
+          <marker
+            style="overflow: visible"
+            id="TriangleStart"
+            refX="0"
+            refY="0"
+            orient="auto-start-reverse"
+            markerWidth="1"
+            markerHeight="1.1560694"
+            viewBox="0 0 5.3244081 6.1553851"
+            preserveAspectRatio="xMidYMid"
+            markerUnits="userSpaceOnUse"
+          >
+            <path
+              transform="scale(0.5)"
+              style="
+                fill: context-stroke;
+                fill-rule: evenodd;
+                stroke: context-stroke;
+                stroke-width: 1pt;
+              "
+              d="M 5.77,0 -2.88,5 V -5 Z"
+              id="path135"
+            />
+          </marker>
+        </defs>
+        <g id="layer1" transform="translate(6059.8841,-12679.23)">
+          <path
+            style="
+              fill: none;
+              stroke-width: 0.66851;
+              stroke-linecap: round;
+              stroke-dasharray: none;
+              stroke-opacity: 1;
+              marker-end: url(#TriangleStart);
+            "
+            id="path398"
+            d="m -6056.2233,12682.238 a 1.7825664,1.7828199 0 0 1 -1.5438,0.891 1.7825664,1.7828199 0 0 1 -1.5437,-0.891"
+          />
+          <path
+            style="
+              fill: none;
+              stroke-width: 0.66851;
+              stroke-linecap: round;
+              stroke-dasharray: none;
+              stroke-opacity: 1;
+              marker-end: url(#TriangleStart);
+            "
+            id="path7713"
+            d="m 6059.3108,-12680.456 a 1.7825664,1.7828199 0 0 1 -1.5437,0.891 1.7825664,1.7828199 0 0 1 -1.5438,-0.891"
+            transform="scale(-1)"
+          />
+        </g>
+      </svg>
+    </button>
+  </div>
+</section>

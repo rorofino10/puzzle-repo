@@ -1,10 +1,29 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Board, Move, MoveToString } from '@puzzle-repo/puzzle-move-generator';
+import {
+  HlmCardContentDirective,
+  HlmCardDirective,
+  HlmCardFooterDirective,
+  HlmCardHeaderDirective,
+  HlmCardTitleDirective,
+} from '@spartan-ng/ui-card-helm';
+import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
+import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
+
 @Component({
   selector: 'board-info',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    HlmCardContentDirective,
+    HlmCardHeaderDirective,
+    HlmCardFooterDirective,
+    HlmCardDirective,
+    HlmCardTitleDirective,
+    HlmButtonDirective,
+    HlmIconComponent,
+  ],
   templateUrl: './board-info.component.html',
   styleUrl: './board-info.component.css',
 })

@@ -4,11 +4,12 @@ import { ActivatedRoute } from '@angular/router';
 import { Board, BitBoard } from '@puzzle-repo/puzzle-move-generator';
 import { BoardComponent } from '@puzzle-repo/puzzle-ui-components';
 import { BoardStringToBitboard } from 'libs/puzzle-move-generator/src/lib/BitBoard/bitboard';
+import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
 
 @Component({
   selector: 'puzzle-repo-level-n',
   standalone: true,
-  imports: [CommonModule, BoardComponent],
+  imports: [CommonModule, BoardComponent, HlmButtonDirective],
   templateUrl: './level-n.component.html',
   styleUrl: './level-n.component.scss',
 })

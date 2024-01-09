@@ -4,9 +4,15 @@
     align-items: center;
     flex-direction: column;
 }
+$layout-breakpoint-small: 830px;
+
 main {
     display: flex;
     flex-direction: row;
+    @media screen and (max-width: 830px) {
+        flex-direction: column; // Change flex-direction when viewport is less than 830px
+
+      }
 }
 .actions {
     width: 100vw;

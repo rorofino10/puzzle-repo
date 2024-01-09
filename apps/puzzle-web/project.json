@@ -37,7 +37,8 @@
               "maximumError": "4kb"
             }
           ],
-          "outputHashing": "all"
+          "outputHashing": "all",
+          "baseHref": "https://rorofino10.github.io/puzzle-repo/"
         },
         "development": {
           "optimization": false,

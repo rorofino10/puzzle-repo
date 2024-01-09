@@ -15,16 +15,14 @@
     border-radius: 100%;
     aspect-ratio: 1;
     display: block;
-    background-color: #4b7399;
 }
 .square {
     width: 100%;
     transition: all 0.5s;
     aspect-ratio: 1;
     display: block;
-    background-color: #eae9d2;
     /* @apply shadow-[inset_-1px_1px] shadow-foreground; */
-    @apply outline outline-2 outline-foreground -outline-offset-1;
+    @apply outline outline-2 outline-muted-foreground -outline-offset-1;
 }
 .piece:hover {
     background-color: red;

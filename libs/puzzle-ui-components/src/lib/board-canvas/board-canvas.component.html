@@ -1,14 +1,14 @@
 <div class="wrapper">
   @for (square of squares; track $index) {
   <div
-    class="square"
+    class="square bg-muted"
     (click)="setSelectedSquare(square.file, square.rank)"
     [style.gridColumn]="square.file + 1"
     [style.gridRow]="board.HEIGHT - square.rank + 1"
   ></div>
   } @for (square of board.golden_squares; track $index) {
   <div
-    class="square"
+    class="square bg-yellow-200"
     (click)="setSelectedSquare(square.file, square.rank)"
     [style.gridColumn]="square.file + 1"
     [style.gridRow]="board.HEIGHT - square.rank + 1"
@@ -21,20 +21,19 @@
         square.rank === selectedPieceSquare?.rank
     }"
     (click)="setSelectedPiece(square.file, square.rank)"
-    class="piece"
+    class="piece bg-muted-foreground"
     [style.gridColumn]="square.file + 1"
     [style.gridRow]="board.HEIGHT - square.rank + 1"
   ></div>
   } @for (square of board.golden_pieces; track $index) {
   <div
-    class="piece"
+    class="piece bg-secondary-foreground"
     [ngClass]="{
       highlighted:
         square.file === selectedPieceSquare?.file &&
         square.rank === selectedPieceSquare?.rank
     }"
     (click)="setSelectedPiece(square.file, square.rank)"
-    [style.backgroundColor]="'blue'"
     [style.gridColumn]="square.file + 1"
     [style.gridRow]="board.HEIGHT - square.rank + 1"
   ></div>

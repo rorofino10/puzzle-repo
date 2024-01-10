@@ -2,27 +2,6 @@
   class="rounded-xl h-full flex flex-col justify-between items-center"
   hlmCard
 >
-  <div hlmCardHeader>
-    <h3 hlmCardTitle>Board Info</h3>
-  </div>
-  <section
-    hlmCardContent
-    class="bg-secondary p-0 flex flex-col rounded-xl overflow-y-auto moves"
-  >
-    @for (move of allMovesHistory; track $index) {
-    <button
-      hlmBtn
-      variant="outline"
-      class="w-full text-secondary-foreground"
-      (click)="sendGoTo($index + 1)"
-      [ngClass]="{
-        highlighted: $index + 1 === board.moveHistory.length
-      }"
-    >
-      {{ $index + 1 }} {{ MoveToString(move) }}
-    </button>
-    }
-  </section>
   <div hlmCardFooter class="justify-between pt-6">
     <button hlmBtn size="icon" (click)="sendUndo()">
       <svg
@@ -197,5 +176,36 @@
         </g>
       </svg>
     </button>
+  </div>
+  <hlm-scroll-area
+    #scroll
+    class="responsive h-2/3 w-48 rounded-md border border-border"
+  >
+    @for (move of allMovesHistory; track $index) {
+    <button
+      hlmBtn
+      variant="outline"
+      class="text-secondary-foreground w-full"
+      (click)="sendGoTo(allMovesHistory.length - $index)"
+      [ngClass]="{
+        highlighted:
+          allMovesHistory.length - $index === board.moveHistory.length
+      }"
+    >
+      {{ allMovesHistory.length - $index }} {{ MoveToString(move) }}
+    </button>
+    }
+  </hlm-scroll-area>
+
+  <!-- <section
+    hlmCardContent
+    class="bg-secondary p-0 flex flex-col rounded-xl overflow-y-auto moves"
+  >
+    <hlm-scroll-area class="h-full w-full">
+
+    </hlm-scroll-area>
+  </section> -->
+  <div hlmCardHeader>
+    <h3 hlmCardTitle>Board Controls</h3>
   </div>
 </section>

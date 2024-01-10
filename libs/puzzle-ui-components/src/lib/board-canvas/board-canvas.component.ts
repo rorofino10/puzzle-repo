@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   Board,
@@ -18,6 +25,29 @@ import {
   styleUrl: './board-canvas.component.css',
 })
 export class BoardCanvasComponent {
+  @Output() goToEvent = new EventEmitter<number>();
+  @Output() undoEvent = new EventEmitter();
+  @Output() resetEvent = new EventEmitter();
+  @Output() redoEvent = new EventEmitter();
+
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    const key = event.key;
+    if (key === 'ArrowLeft') {
+      this.undoEvent.emit();
+    }
+    if (key === 'ArrowRight') {
+      this.redoEvent.emit();
+    }
+    if (key === 'Delete') {
+      console.log('Reset!');
+      this.resetEvent.emit();
+    }
+    if (!isNaN(+key)) {
+      this.goToEvent.emit(+key);
+    }
+  }
+
   @Input({ required: true }) board!: Board;
   @Output() moveEvent = new EventEmitter<Move>();
 

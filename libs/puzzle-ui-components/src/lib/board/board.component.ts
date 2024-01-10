@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   Board,
@@ -40,6 +40,7 @@ export class BoardComponent {
       console.error(res);
       return;
     }
+
     console.log(this.board.moveHistory.length, MoveToString(move));
     if (res === BoardState.WIN) console.log(res);
   }

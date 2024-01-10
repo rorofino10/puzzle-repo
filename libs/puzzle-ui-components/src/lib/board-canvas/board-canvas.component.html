@@ -21,13 +21,13 @@
         square.rank === selectedPieceSquare?.rank
     }"
     (click)="setSelectedPiece(square.file, square.rank)"
-    class="piece bg-muted-foreground"
+    class="transition-transform block bg-muted-foreground w-full aspect-square rounded-full hover:scale-150"
     [style.gridColumn]="square.file + 1"
     [style.gridRow]="board.HEIGHT - square.rank + 1"
   ></div>
   } @for (square of board.golden_pieces; track $index) {
   <div
-    class="piece bg-secondary-foreground"
+    class="transition-transform block bg-secondary-foreground w-full aspect-square rounded-full hover:scale-150"
     [ngClass]="{
       highlighted:
         square.file === selectedPieceSquare?.file &&

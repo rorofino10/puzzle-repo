@@ -12,16 +12,9 @@ To start the development server run `nx serve puzzle-repo`. Open your browser an
 
 Just run `nx build demoapp` to build the application. The build artifacts will be stored in the `dist/` directory, ready to be deployed.
 
-<!-- ## Set up CI!
-
-Nx comes with local caching already built-in (check your `nx.json`). On CI you might want to go a step further.
-
-- [Set up remote caching](https://nx.dev/core-features/share-your-cache)
-- [Set up task distribution across multiple machines](https://nx.dev/nx-cloud/features/distribute-task-execution)
-- [Learn more how to setup CI](https://nx.dev/recipes/ci) -->
-
 ## TODO!
 
-- Reach consensus on win condition for multiple Golden Pieces and Squares
-- Make a better UI
 - Use Ngx-Animate-CSS-Grid to animate movement of pieces
+- Board Builder Component
+- Componentize Moves List, Pieces, Board Info
+  Add keypresses

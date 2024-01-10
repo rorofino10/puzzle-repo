@@ -1,5 +1,12 @@
 <main>
-  <board-canvas [board]="board" (moveEvent)="inputMove($event)" />
+  <board-canvas
+    [board]="board"
+    (moveEvent)="inputMove($event)"
+    (undoEvent)="undoMove()"
+    (resetEvent)="resetBoard()"
+    (redoEvent)="redoMove()"
+    (goToEvent)="goToMove($event)"
+  />
   @if (showInfo) {
   <board-info
     [board]="board"

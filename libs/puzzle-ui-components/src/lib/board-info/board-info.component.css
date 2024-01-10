@@ -1,7 +1,4 @@
-.moves {
-    width: 90%;
-    height: 250px;
-}
+
 .highlighted {
     @apply bg-secondary-foreground;
     @apply text-secondary;
@@ -11,8 +8,8 @@
     :host {
         width: 100%;
     }
-    .moves {
-        height: fit-content;
+    .responsive {
+        @apply h-72 !important;
     }
   }
 

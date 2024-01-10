@@ -10,7 +10,7 @@
   </div>
   } @for (square of board.golden_squares; track $index) {
   <div
-    class="canvas bg-primary"
+    class="square canvas bg-primary"
     (click)="setSelectedSquare(square.file, square.rank)"
     [style.gridColumn]="square.file + 1"
     [style.gridRow]="board.HEIGHT - square.rank + 1"

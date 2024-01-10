@@ -1,5 +1,21 @@
 <div class="wrapper">
-  @for (square of squares; track $index) {
+  @if (_showCoordinates()) { @for (file of files; track $index) {
+  <div
+    class="block w-fit h-fit z-[1] text-foreground select-none"
+    [style.gridRow]="9"
+    [style.gridColumn]="$index + 1"
+  >
+    {{ file }}
+  </div>
+  } @for (rank of ranks; track $index) {
+  <div
+    class="block w-fit h-fit z-10 text-foreground select-none"
+    [style.gridRow]="board.HEIGHT - $index + 1"
+    [style.gridColumn]="1"
+  >
+    {{ rank }}
+  </div>
+  } } @for (square of squares; track $index) {
   <div
     class="square bg-muted"
     (click)="setSelectedSquare(square.file, square.rank)"
@@ -8,7 +24,7 @@
   ></div>
   } @for (square of board.golden_squares; track $index) {
   <div
-    class="square bg-yellow-200"
+    class="square bg-primary"
     (click)="setSelectedSquare(square.file, square.rank)"
     [style.gridColumn]="square.file + 1"
     [style.gridRow]="board.HEIGHT - square.rank + 1"
@@ -21,13 +37,13 @@
         square.rank === selectedPieceSquare?.rank
     }"
     (click)="setSelectedPiece(square.file, square.rank)"
-    class="transition-transform block bg-muted-foreground w-full aspect-square rounded-full hover:scale-150"
+    class="transition-transform z-20 block bg-muted-foreground w-full aspect-square rounded-full hover:scale-150"
     [style.gridColumn]="square.file + 1"
     [style.gridRow]="board.HEIGHT - square.rank + 1"
   ></div>
   } @for (square of board.golden_pieces; track $index) {
   <div
-    class="transition-transform block bg-secondary-foreground w-full aspect-square rounded-full hover:scale-150"
+    class="transition-transform z-20 block bg-destructive w-full aspect-square rounded-full hover:scale-150"
     [ngClass]="{
       highlighted:
         square.file === selectedPieceSquare?.file &&

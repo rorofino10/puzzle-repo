@@ -17,5 +17,5 @@
 
 
 .highlighted {
-    @apply bg-primary;
+    @apply bg-red-200;
 }

@@ -7,7 +7,7 @@ export {
   RankFileToIndex,
   IndexToSquare,
 } from './lib/Square/square';
-export { FILE } from './lib/Square/file';
+export { FILE, FILE_STRING_MAP } from './lib/Square/file';
 export { RANK } from './lib/Square/rank';
 export {
   Board,

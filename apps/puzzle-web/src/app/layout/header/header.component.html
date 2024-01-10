@@ -12,31 +12,41 @@
   </a>
 
   <div class="flex flex-row justify-between">
-    <button hlmBtn size="sm" variant="outline" (click)="setColorTheme('blue')">
-      Blue
-    </button>
-    <button hlmBtn size="sm" variant="outline" (click)="setColorTheme('red')">
-      Red
-    </button>
     <button
       hlmBtn
+      class="bg-blue-400"
+      size="sm"
+      variant="outline"
+      (click)="setColorTheme('blue')"
+    ></button>
+    <button
+      hlmBtn
+      class="bg-red-400"
+      size="sm"
+      variant="outline"
+      (click)="setColorTheme('red')"
+    ></button>
+    <button
+      hlmBtn
+      class="bg-violet-400"
       size="sm"
       variant="outline"
       (click)="setColorTheme('violet')"
-    >
-      Red
-    </button>
-    <button hlmBtn size="sm" variant="outline" (click)="setColorTheme('gray')">
-      Gray
-    </button>
+    ></button>
     <button
       hlmBtn
+      class="bg-gray-400"
+      size="sm"
+      variant="outline"
+      (click)="setColorTheme('gray')"
+    ></button>
+    <button
+      hlmBtn
+      class="bg-orange-400"
       size="sm"
       variant="outline"
       (click)="setColorTheme('orange')"
-    >
-      Orange
-    </button>
+    ></button>
   </div>
 
   <button

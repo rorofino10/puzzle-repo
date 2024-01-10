@@ -89,6 +89,12 @@ export class Board {
   get currentLegalMoves(): Move[] {
     return this._currentLegalMoves;
   }
+  get allMovesHistory(): Move[] {
+    return [...this.moveHistory, ...[...this.undoHistory].reverse()];
+  }
+  get reverseAllMovesHistory(): Move[] {
+    return this.allMovesHistory.reverse();
+  }
 
   undoMove(): BoardResult {
     const lastMove = this._listOfMoves.pop();

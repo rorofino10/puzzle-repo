@@ -16,5 +16,4 @@ Just run `nx build demoapp` to build the application. The build artifacts will b
 
 - Use Ngx-Animate-CSS-Grid to animate movement of pieces
 - Board Builder Component
-- Componentize Moves List, Pieces, Board Info
-  Add keypresses
+- Componentize Moves List, Pieces

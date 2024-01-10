@@ -9,7 +9,8 @@
         width: 100%;
     }
     .responsive {
-        @apply h-72 !important;
+        @apply h-fit !important;
+        display: table;
     }
   }
 

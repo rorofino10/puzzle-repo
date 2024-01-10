@@ -179,20 +179,23 @@
   </div>
   <hlm-scroll-area
     #scroll
-    class="responsive h-2/3 w-48 rounded-md border border-border"
+    [autoHeightDisabled]="false"
+    class="responsive h-72 w-48 rounded-md border border-border"
   >
-    @for (move of allMovesHistory; track $index) {
+    @for (move of board.reverseAllMovesHistory; track $index) {
     <button
       hlmBtn
       variant="outline"
       class="text-secondary-foreground w-full"
-      (click)="sendGoTo(allMovesHistory.length - $index)"
+      (click)="sendGoTo(board.reverseAllMovesHistory.length - $index)"
       [ngClass]="{
         highlighted:
-          allMovesHistory.length - $index === board.moveHistory.length
+          board.reverseAllMovesHistory.length - $index ===
+          board.moveHistory.length
       }"
     >
-      {{ allMovesHistory.length - $index }} {{ MoveToString(move) }}
+      {{ board.reverseAllMovesHistory.length - $index }}
+      {{ MoveToString(move) }}
     </button>
     }
   </hlm-scroll-area>

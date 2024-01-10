@@ -42,14 +42,6 @@ export class BoardInfoComponent {
   @Output() resetEvent = new EventEmitter();
   @Output() redoEvent = new EventEmitter();
 
-  get allMovesHistory(): Move[] {
-    const moves = [
-      ...this.board.moveHistory,
-      ...[...this.board.undoHistory].reverse(),
-    ].reverse();
-    return moves;
-  }
-
   scrollToBottom() {
     if (this.scroll) {
       this.scroll.scrollToBottom();

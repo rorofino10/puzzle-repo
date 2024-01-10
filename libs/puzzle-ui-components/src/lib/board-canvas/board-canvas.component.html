@@ -1,30 +1,16 @@
 <div class="wrapper">
-  @if (_showCoordinates()) { @for (file of files; track $index) {
+  @for (square of squares; track $index) {
   <div
-    class="block w-fit h-fit z-[1] text-foreground select-none"
-    [style.gridRow]="9"
-    [style.gridColumn]="$index + 1"
-  >
-    {{ file }}
-  </div>
-  } @for (rank of ranks; track $index) {
-  <div
-    class="block w-fit h-fit z-10 text-foreground select-none"
-    [style.gridRow]="board.HEIGHT - $index + 1"
-    [style.gridColumn]="1"
-  >
-    {{ rank }}
-  </div>
-  } } @for (square of squares; track $index) {
-  <div
-    class="square bg-muted"
+    class="square bg-muted select-none text-transparent hover:text-foreground transition-colors duration-300 flex items-center justify-center"
     (click)="setSelectedSquare(square.file, square.rank)"
     [style.gridColumn]="square.file + 1"
     [style.gridRow]="board.HEIGHT - square.rank + 1"
-  ></div>
+  >
+    {{ square.file + 1 | boardFile }}{{ square.rank + 1 }}
+  </div>
   } @for (square of board.golden_squares; track $index) {
   <div
-    class="square bg-primary"
+    class="canvas bg-primary"
     (click)="setSelectedSquare(square.file, square.rank)"
     [style.gridColumn]="square.file + 1"
     [style.gridRow]="board.HEIGHT - square.rank + 1"

@@ -12,7 +12,7 @@
 
 .square {
     /* @apply shadow-[inset_-1px_1px] shadow-foreground; */
-    @apply w-full block aspect-square outline outline-2 outline-muted-foreground -outline-offset-1;
+    @apply w-full aspect-square outline outline-2 outline-muted-foreground -outline-offset-1;
 }
 
 

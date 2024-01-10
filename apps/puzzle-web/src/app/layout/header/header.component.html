@@ -10,12 +10,42 @@
   >
     Source Code
   </a>
+
+  <div class="flex flex-row justify-between">
+    <button hlmBtn size="sm" variant="outline" (click)="setColorTheme('blue')">
+      Blue
+    </button>
+    <button hlmBtn size="sm" variant="outline" (click)="setColorTheme('red')">
+      Red
+    </button>
+    <button
+      hlmBtn
+      size="sm"
+      variant="outline"
+      (click)="setColorTheme('violet')"
+    >
+      Red
+    </button>
+    <button hlmBtn size="sm" variant="outline" (click)="setColorTheme('gray')">
+      Gray
+    </button>
+    <button
+      hlmBtn
+      size="sm"
+      variant="outline"
+      (click)="setColorTheme('orange')"
+    >
+      Orange
+    </button>
+  </div>
+
   <button
     hlmBtn
     class="text-background"
     variant="outline"
     (click)="toggleDarkMode()"
   >
-    @if ((themingService.theme$ | async) === 'dark' ) { Light } @else { Dark }
+    @if ((themingService.lightingTheme$ | async) === 'dark' ) { Light } @else {
+    Dark }
   </button>
 </main>

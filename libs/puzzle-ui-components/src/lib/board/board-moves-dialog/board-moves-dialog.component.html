@@ -1,0 +1,22 @@
+<hlm-dialog>
+  <button brnDialogTrigger hlmBtn size="sm">Moves</button>
+  <hlm-dialog-content *brnDialogContent="let ctx">
+    <hlm-dialog-header>
+      <h3 brnDialogTitle hlm class="text-foreground">List of Moves</h3>
+      <!-- <p brnDialogDescription hlm>
+        Make changes to your profile here. Click save when you're done.
+      </p> -->
+    </hlm-dialog-header>
+    <div
+      class="justify-center inline-flex flex-row flex-wrap max-w-[500px] rounded-md border border-border"
+    >
+      @for (move of board.allMovesHistory; track $index) {
+      <button hlmBtn variant="outline" class="text-secondary-foreground">
+        {{ $index + 1 }}
+        {{ MoveToString(move) }}
+      </button>
+
+      }
+    </div>
+  </hlm-dialog-content>
+</hlm-dialog>

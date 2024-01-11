@@ -16,10 +16,24 @@ import {
 } from '@spartan-ng/ui-card-helm';
 import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
 import { HlmScrollAreaComponent } from '@spartan-ng/ui-scrollarea-helm';
-
+import {
+  HlmDialogComponent,
+  HlmDialogContentComponent,
+  HlmDialogHeaderComponent,
+  HlmDialogFooterComponent,
+  HlmDialogTitleDirective,
+  HlmDialogDescriptionDirective,
+} from '@spartan-ng/ui-dialog-helm';
+import {
+  BrnDialogTriggerDirective,
+  BrnDialogContentDirective,
+} from '@spartan-ng/ui-dialog-brain';
+import { BoardMovesDialogComponent } from '../board/board-moves-dialog/board-moves-dialog.component';
 @Component({
   selector: 'board-info',
   standalone: true,
+  templateUrl: './board-info.component.html',
+  styleUrl: './board-info.component.css',
   imports: [
     CommonModule,
     HlmCardContentDirective,
@@ -29,9 +43,16 @@ import { HlmScrollAreaComponent } from '@spartan-ng/ui-scrollarea-helm';
     HlmCardTitleDirective,
     HlmButtonDirective,
     HlmScrollAreaComponent,
+    BrnDialogTriggerDirective,
+    BrnDialogContentDirective,
+    HlmDialogComponent,
+    HlmDialogContentComponent,
+    HlmDialogHeaderComponent,
+    HlmDialogFooterComponent,
+    HlmDialogTitleDirective,
+    HlmDialogDescriptionDirective,
+    BoardMovesDialogComponent,
   ],
-  templateUrl: './board-info.component.html',
-  styleUrl: './board-info.component.css',
 })
 export class BoardInfoComponent {
   @ViewChild('scroll') scroll: any;

@@ -38,6 +38,9 @@
       ],
       "@spartan-ng/ui-scrollarea-helm": [
         "libs/spartan/ui-scrollarea-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-dialog-helm": [
+        "libs/spartan/ui-dialog-helm/src/index.ts"
       ]
     }
   },

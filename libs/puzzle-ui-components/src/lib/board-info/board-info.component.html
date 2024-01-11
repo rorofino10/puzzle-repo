@@ -3,6 +3,7 @@
   hlmCard
 >
   <div hlmCardFooter class="justify-between pt-6">
+    <board-moves-dialog-button [board]="board"></board-moves-dialog-button>
     <button hlmBtn size="icon" (click)="sendUndo()">
       <svg
         class="stroke-primary-foreground"
@@ -180,7 +181,7 @@
   <hlm-scroll-area
     #scroll
     [autoHeightDisabled]="false"
-    class="responsive h-full w-48 rounded-md border border-border"
+    class="responsive h-60 w-48 rounded-md border border-border"
   >
     @for (move of board.reverseAllMovesHistory; track $index) {
     <button

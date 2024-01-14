@@ -20,28 +20,6 @@ describe('board', () => {
     expect(boardToTest.SIZE).toBe(64);
   });
 
-  // it('Should validate square', () => {
-  //   const expectedValidResult = boardToTest.makeMove(0, 5);
-  //   const expectedInvalidResult = boardToTest.makeMove(-5, 9);
-  //   expect(expectedValidResult).not.toEqual(Error.NOT_VALID_SQUARE);
-  //   expect(expectedInvalidResult).toEqual(Error.NOT_VALID_SQUARE);
-  // });
-  // it('Should check if there is a piece in fromSquare', () => {
-  //   const expectedValidResult = boardToTest.makeMove(0, 5);
-  //   const expectedInvalidResult = boardToTest.makeMove(2, 0);
-  //   expect(expectedValidResult).not.toEqual(Error.COULD_NOT_FIND_PIECE);
-  //   expect(expectedInvalidResult).toEqual(Error.COULD_NOT_FIND_PIECE);
-  // });
-  // it('Should check if there is a piece in toSquare', () => {
-  //   const expectedValidResult = boardToTest.makeMove(0, 2);
-  //   const expectedInvalidResult = boardToTest.makeMove(
-  //     0,
-  //     RankFileToIndex(4, 0)
-  //   );
-  //   expect(expectedValidResult).not.toEqual(Error.POSITION_OCCUPIED);
-  //   expect(expectedInvalidResult).toEqual(Error.POSITION_OCCUPIED);
-  // });
-
   it('Should give the correct current legal moves ', () => {
     const testingBitBoard = BitBoard.empty()
       .setBit(RankFileToIndex(RANK.FOUR, FILE.A))

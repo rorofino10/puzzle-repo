@@ -66,14 +66,21 @@ export class Board {
       this.golden_squares_bitboard
     );
   }
-  private checkWin(): BoardState | BoardSuccess {
+  private updateBoardState(): BoardSuccess {
     const isWin =
       this.golden_pieces_bitboard.getBoard() ===
       this.golden_squares_bitboard.getBoard();
     if (isWin) {
       this._gameState = BoardState.WIN;
+      this._currentLegalMoves = [];
       return BoardSuccess.WIN;
     }
+    if (this.currentLegalMoves.length === 0) {
+      this._gameState = BoardState.LOST;
+      this._currentLegalMoves = [];
+      return BoardSuccess.LOST;
+    }
+    this._gameState = BoardState.UNDEFINED;
     return BoardSuccess.UNDEFINED;
   }
 
@@ -110,8 +117,11 @@ export class Board {
     if (!lastMove) return BoardError.NO_MOVE_TO_UNDO;
 
     this.makeMove(Move(lastMove.destination, lastMove.origin));
-    this.generateCurrentLegalMoves();
     this._undoList.push(lastMove);
+
+    this.generateCurrentLegalMoves();
+    this.updateBoardState();
+
     return BoardSuccess.UNDO_SUCCESS;
   }
 
@@ -119,11 +129,13 @@ export class Board {
     if (!this._undoList) return BoardError.NO_MOVE_TO_REDO;
     const firstMove = this._undoList.pop();
     if (!firstMove) return BoardError.NO_MOVE_TO_REDO;
-    this.makeMove(firstMove);
 
+    this.makeMove(firstMove);
     this._listOfMoves.push(firstMove);
 
     this.generateCurrentLegalMoves();
+    this.updateBoardState();
+
     return BoardSuccess.REDO_SUCCESS;
   }
   goToMove(turnToGo: number): BoardResult {
@@ -136,8 +148,7 @@ export class Board {
         this.undoMove();
       }
     } else if (this.moveHistory.length < turnToGo) {
-      if (this.undoHistory.length < turnToGo - this.moveHistory.length)
-        return BoardError.NO_MOVE_TO_GO;
+      if (this.undoHistory.length < distance) return BoardError.NO_MOVE_TO_GO;
       for (let index = 0; index < distance; index++) {
         this.redoMove();
       }
@@ -151,21 +162,26 @@ export class Board {
     this._undoList = [];
   }
   inputMove(move: Move): BoardResult {
-    if (
-      !this.isValidSquare(move.origin) ||
-      !this.isValidSquare(move.destination)
-    )
-      return BoardError.NOT_VALID_SQUARE;
+    // Check if Game is still ongoing
+    if (this.gameState !== BoardState.UNDEFINED)
+      return BoardError.GAME_FINISHED;
+    // Redundant but information rich checks.
 
-    if (!this.isPieceOnSquare(move.origin))
-      return BoardError.COULD_NOT_FIND_PIECE;
-    if (this.isPieceOnSquare(move.destination))
-      return BoardError.POSITION_OCCUPIED;
+    // if (
+    //   !this.isValidSquare(move.origin) ||
+    //   !this.isValidSquare(move.destination)
+    // )
+    //   return BoardError.NOT_VALID_SQUARE;
 
+    // if (!this.isPieceOnSquare(move.origin))
+    //   return BoardError.COULD_NOT_FIND_PIECE;
+    // if (this.isPieceOnSquare(move.destination))
+    //   return BoardError.POSITION_OCCUPIED;
+
+    //Check if move is valid
     const isLegalMove = this._currentLegalMoves.find((legalMove) =>
       CompareMove(legalMove, move)
     );
-
     if (!isLegalMove) return BoardError.NOT_LEGAL_MOVE;
 
     this.makeMove(move);
@@ -178,8 +194,9 @@ export class Board {
     }
     this.generateCurrentLegalMoves();
 
-    const gameState = this.checkWin();
-    if (gameState === BoardSuccess.WIN) return BoardSuccess.WIN;
+    const gameState = this.updateBoardState();
+
+    if (gameState !== BoardSuccess.UNDEFINED) return gameState;
 
     return BoardSuccess.MOVE_SUCCESS;
   }
@@ -222,7 +239,7 @@ export class Board {
 
   public generateCurrentLegalMoves() {
     this._currentLegalMoves = [];
-    const pieces_squares = extractSquaresFromBitboard(this.occupancy);
+    const pieces_squares = [...this.normie_pieces, ...this.golden_pieces];
     pieces_squares.forEach((piece_square) => {
       const legal_moves_from_square =
         this.generateLegalMovesFromSquare(piece_square);
@@ -301,6 +318,7 @@ export enum BoardError {
   NO_MOVE_TO_REDO = 'No move left to Redo.',
   NO_MOVE_TO_GO = 'No move to go to.',
   WRONG_INPUT = 'You submitted a wrong input.',
+  GAME_FINISHED = 'Game has already finished.',
 }
 
 export enum BoardSuccess {
@@ -314,6 +332,7 @@ export enum BoardSuccess {
 }
 
 export enum BoardState {
+  DRAW = 1 / 2,
   WIN = 1,
   UNDEFINED = 0,
   LOST = -1,

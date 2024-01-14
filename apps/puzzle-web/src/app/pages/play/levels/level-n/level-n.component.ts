@@ -1,9 +1,7 @@
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
 import { Board, BitBoard } from '@puzzle-repo/puzzle-move-generator';
 import { BoardComponent } from '@puzzle-repo/puzzle-ui-components';
-import { BoardStringToBitboard } from 'libs/puzzle-move-generator/src/lib/BitBoard/bitboard';
 import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
 
 @Component({

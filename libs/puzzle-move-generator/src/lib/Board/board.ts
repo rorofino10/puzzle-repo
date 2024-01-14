@@ -1,5 +1,6 @@
 import {
   BitBoard,
+  BoardStringToBitboard,
   and,
   extractSquaresFromBitboard,
   getFile,
@@ -65,17 +66,25 @@ export class Board {
       this.golden_squares_bitboard
     );
   }
-  private checkWin(): BoardState {
-    return and(
-      this.golden_pieces_bitboard,
-      this.golden_squares_bitboard
-    ).getBoard() === this.golden_squares_bitboard.getBoard()
-      ? BoardState.WIN
-      : BoardState.UNDEFINED;
+  private checkWin(): BoardState | BoardSuccess {
+    const isWin =
+      this.golden_pieces_bitboard.getBoard() ===
+      this.golden_squares_bitboard.getBoard();
+    if (isWin) {
+      this._gameState = BoardState.WIN;
+      return BoardSuccess.WIN;
+    }
+    return BoardSuccess.UNDEFINED;
   }
 
   get gameState(): BoardState {
     return this._gameState;
+  }
+  get position(): Position {
+    return {
+      state: this._gameState,
+      moves: this.moveHistory,
+    };
   }
   get turn(): number {
     return this.moveHistory.length;
@@ -170,8 +179,7 @@ export class Board {
     this.generateCurrentLegalMoves();
 
     const gameState = this.checkWin();
-    if (gameState === BoardState.WIN) return BoardState.WIN;
-    this._gameState = gameState;
+    if (gameState === BoardSuccess.WIN) return BoardSuccess.WIN;
 
     return BoardSuccess.MOVE_SUCCESS;
   }
@@ -270,6 +278,18 @@ export class Board {
   public static EMPTY(): Board {
     return new Board(BitBoard.empty(), BitBoard.empty(), BitBoard.empty());
   }
+
+  public static FromString(
+    normieString: string,
+    goldenPieceString: string,
+    goldenSquareString: string
+  ): Board {
+    return new Board(
+      BoardStringToBitboard(normieString),
+      BoardStringToBitboard(goldenPieceString),
+      BoardStringToBitboard(goldenSquareString)
+    );
+  }
 }
 
 export enum BoardError {
@@ -288,16 +308,34 @@ export enum BoardSuccess {
   UNDO_SUCCESS = 'Successfully undid move.',
   REDO_SUCCESS = 'Successfully redid move.',
   GO_TO_SUCCESS = 'Successfully restored turn.',
-}
-
-export enum BoardState {
   WIN = 'You won the game',
   UNDEFINED = 'Undefined',
   LOST = 'You lost',
 }
 
-export type BoardResult = BoardSuccess | BoardError | BoardState;
+export enum BoardState {
+  WIN = 1,
+  UNDEFINED = 0,
+  LOST = -1,
+}
 
+export type Position = {
+  state: BoardState;
+  moves: Move[];
+};
+
+export const compareBestPosition = (
+  position1: Position,
+  position2: Position
+): Position => {
+  if (position1.state === BoardState.WIN) return position1;
+  else if (position2.state === BoardState.WIN) return position2;
+  else if (position1.state === BoardState.UNDEFINED) return position1;
+  else if (position2.state === BoardState.UNDEFINED) return position2;
+  else if (position1.state === BoardState.LOST) return position1;
+  else return position2;
+};
+export type BoardResult = BoardSuccess | BoardError | BoardState;
 export const isBoardError = (val: any): boolean => {
   if (Object.values(BoardError).includes(val as BoardError)) {
     return true;

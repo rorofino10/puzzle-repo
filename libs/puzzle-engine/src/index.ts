@@ -1,1 +1,1 @@
-export * from './lib/puzzle-engine';
+export * from './lib/solver';

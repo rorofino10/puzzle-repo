@@ -9,7 +9,7 @@ import {
 } from '@puzzle-repo/puzzle-move-generator';
 import { BoardCanvasComponent } from '../board-canvas/board-canvas.component';
 import { BoardInfoComponent } from '../board-info/board-info.component';
-import { isBoardError } from 'libs/puzzle-move-generator/src/lib/Board/board';
+import { BoardSuccess, isBoardError } from '@puzzle-repo/puzzle-move-generator';
 
 @Component({
   selector: 'board',
@@ -37,12 +37,13 @@ export class BoardComponent {
     const res = this.board.inputMove(move);
 
     if (Object.values(BoardError).includes(res as BoardError)) {
+      // Implement alert dialog
       console.error(res);
       return;
     }
 
-    console.log(this.board.moveHistory.length, MoveToString(move));
-    if (res === BoardState.WIN) console.log(res);
+    // console.log(this.board.moveHistory.length, MoveToString(move));
+    if (res === BoardSuccess.WIN) console.log(res);
   }
   undoMove(): void {
     this.board.undoMove();

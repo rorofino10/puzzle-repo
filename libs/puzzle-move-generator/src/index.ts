@@ -15,5 +15,8 @@ export {
   BoardSuccess,
   BoardError,
   BoardState,
+  Position,
+  compareBestPosition,
+  isBoardError,
 } from './lib/Board/board';
 export { BitBoard } from './lib/BitBoard/bitboard';

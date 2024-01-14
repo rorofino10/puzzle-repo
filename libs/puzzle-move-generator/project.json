@@ -28,7 +28,7 @@
     "benchmark": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "ts-node libs/puzzle-move-generator/src/puzzle-move-generator.benchmark.ts"
+        "command": "ts-node libs/puzzle-move-generator/src/lib/puzzle-move-generator.benchmark.ts"
       }
     }
   },

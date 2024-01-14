@@ -20,49 +20,54 @@ const golden_squaresBitBoard = BitBoard.empty().setBit(
   RankFileToIndex(RANK.THREE, FILE.C)
 );
 
-suite.add('Board#Instantiate', () => {
-  const testingBoard = new Board(
-    piecesBitBoard,
-    golden_piecesBitBoard,
-    golden_squaresBitBoard
-  );
-});
-
-suite.add('Board#UndoMove', () => {
-  const testingBoard = new Board(
-    piecesBitBoard,
-    golden_piecesBitBoard,
-    golden_squaresBitBoard
-  );
-  testingBoard.inputMove(
-    // Move(Square(RANK.ONE, FILE.E), Square(RANK.ONE, FILE.B))
-    testingBoard.currentLegalMoves[
-      Math.floor(Math.random() * testingBoard.currentLegalMoves.length)
-    ]
-  );
-  testingBoard.undoMove();
-});
-suite.add('Board#InputMove', () => {
-  const testingBoard = new Board(
-    piecesBitBoard,
-    golden_piecesBitBoard,
-    golden_squaresBitBoard
-  );
-  testingBoard.inputMove(
-    // Move(Square(RANK.ONE, FILE.E), Square(RANK.ONE, FILE.B))
-    testingBoard.currentLegalMoves[
-      Math.floor(Math.random() * testingBoard.currentLegalMoves.length)
-    ]
-  );
-});
 const testingBoard = new Board(
   piecesBitBoard,
   golden_piecesBitBoard,
   golden_squaresBitBoard
 );
-suite.add('Board#GenerateLegalMoves', () => {
-  testingBoard.generateCurrentLegalMoves();
+
+// suite.add('Board#Instantiate', () => {
+//   const testingBoard = new Board(
+//     piecesBitBoard,
+//     golden_piecesBitBoard,
+//     golden_squaresBitBoard
+//   );
+// });
+
+// suite.add('Board#UndoMove', () => {
+//   const testingBoard = new Board(
+//     piecesBitBoard,
+//     golden_piecesBitBoard,
+//     golden_squaresBitBoard
+//   );
+//   testingBoard.inputMove(
+//     // Move(Square(RANK.ONE, FILE.E), Square(RANK.ONE, FILE.B))
+//     testingBoard.currentLegalMoves[
+//       Math.floor(Math.random() * testingBoard.currentLegalMoves.length)
+//     ]
+//   );
+//   testingBoard.undoMove();
+// });
+// suite.add('Board#InputMove', () => {
+//   const testingBoard = new Board(
+//     piecesBitBoard,
+//     golden_piecesBitBoard,
+//     golden_squaresBitBoard
+//   );
+//   testingBoard.inputMove(
+//     // Move(Square(RANK.ONE, FILE.E), Square(RANK.ONE, FILE.B))
+//     testingBoard.currentLegalMoves[
+//       Math.floor(Math.random() * testingBoard.currentLegalMoves.length)
+//     ]
+//   );
+// });
+suite.add('Board#InputUndo', () => {
+  testingBoard.inputMove(testingBoard.currentLegalMoves[0]);
+  testingBoard.undoMove();
 });
+// suite.add('Board#GenerateLegalMoves', () => {
+//   testingBoard.generateCurrentLegalMoves();
+// });
 
 // Run the benchmark
 suite

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Board, BitBoard } from '@puzzle-repo/puzzle-move-generator';
@@ -13,22 +13,18 @@ import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
   templateUrl: './level-n.component.html',
   styleUrl: './level-n.component.scss',
 })
-export class LevelNComponent {
-  private activatedRoute = inject(ActivatedRoute);
+export class LevelNComponent implements OnInit {
+  @Input('normie_pieces') normie_pieces!: string;
+  @Input('golden_piece') golden_pieces!: string;
+  @Input('golden_square') golden_squares!: string;
 
-  normie_pieces_bitboard = BoardStringToBitboard(
-    this.activatedRoute.snapshot.params['normie_pieces']
-  );
-  golden_piece_bitboard = BoardStringToBitboard(
-    this.activatedRoute.snapshot.params['golden_piece']
-  );
-  golden_square_bitboard = BoardStringToBitboard(
-    this.activatedRoute.snapshot.params['golden_square']
-  );
+  playableBoard!: Board;
 
-  board = new Board(
-    this.normie_pieces_bitboard,
-    this.golden_piece_bitboard,
-    this.golden_square_bitboard
-  );
+  ngOnInit(): void {
+    this.playableBoard = Board.FromString(
+      this.normie_pieces,
+      this.golden_pieces,
+      this.golden_squares
+    );
+  }
 }

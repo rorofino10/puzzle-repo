@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   Board,
@@ -10,17 +10,24 @@ import {
 import { BoardCanvasComponent } from '../board-canvas/board-canvas.component';
 import { BoardInfoComponent } from '../board-info/board-info.component';
 import { BoardSuccess, isBoardError } from '@puzzle-repo/puzzle-move-generator';
+import { BoardStateDialogComponent } from './board-state-dialog/board-state-dialog.component';
 
 @Component({
   selector: 'board',
   standalone: true,
-  imports: [CommonModule, BoardCanvasComponent, BoardInfoComponent],
+  imports: [
+    CommonModule,
+    BoardCanvasComponent,
+    BoardInfoComponent,
+    BoardStateDialogComponent,
+  ],
   templateUrl: './board.component.html',
   styleUrl: './board.component.scss',
 })
 export class BoardComponent {
   @Input({ required: true }) board!: Board;
   @Input({ required: true }) showInfo!: boolean;
+  protected boardStateEmitter: EventEmitter<BoardState> = new EventEmitter();
 
   inputRandomMove(): void {
     const moves = this.board.currentLegalMoves;
@@ -43,7 +50,10 @@ export class BoardComponent {
     }
 
     // console.log(this.board.moveHistory.length, MoveToString(move));
-    if (res === BoardSuccess.WIN) console.log(res);
+    // if (res === BoardSuccess.WIN) console.log(res);
+    if (this.board.gameState !== BoardState.UNDEFINED) {
+      this.boardStateEmitter.emit(this.board.gameState);
+    }
   }
   undoMove(): void {
     this.board.undoMove();

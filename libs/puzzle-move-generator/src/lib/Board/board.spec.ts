@@ -19,20 +19,13 @@ describe('board', () => {
   it('Should have 64 squares', () => {
     expect(boardToTest.SIZE).toBe(64);
   });
-
+  it('Should display the actual configuration', () => {
+    const board = Board.FromString('A1', 'B1', 'C1');
+    console.log(board.configuration.toString(2));
+    // expect(board.position.configuration.toString()).toEqual('0');
+  });
   it('Should give the correct current legal moves ', () => {
-    const testingBitBoard = BitBoard.empty()
-      .setBit(RankFileToIndex(RANK.FOUR, FILE.A))
-      .setBit(RankFileToIndex(RANK.EIGHT, FILE.C))
-      .setBit(RankFileToIndex(RANK.FOUR, FILE.C))
-      .setBit(RankFileToIndex(RANK.ONE, FILE.C));
-
-    const testingBoard = new Board(
-      testingBitBoard,
-      BitBoard.empty(),
-      BitBoard.empty()
-    );
-
+    const testingBoard = Board.FromString('A4C8C4C1', 'H2', 'H3');
     let legalMoves = testingBoard.currentLegalMoves;
     // console.log(legalMoves);
     // testingBoard.getPiecesBitboard().logAsTable();
@@ -49,18 +42,7 @@ describe('board', () => {
     expect(legalMoves.length).toBe(2);
   });
   it('Should undo previous move ', () => {
-    const testingBitBoard = BitBoard.empty()
-      .setBit(RankFileToIndex(RANK.FOUR, FILE.A))
-      .setBit(RankFileToIndex(RANK.EIGHT, FILE.C))
-      .setBit(RankFileToIndex(RANK.FOUR, FILE.C))
-      .setBit(RankFileToIndex(RANK.ONE, FILE.C));
-
-    const testingBoard = new Board(
-      testingBitBoard,
-      BitBoard.empty(),
-      BitBoard.empty()
-    );
-
+    const testingBoard = Board.FromString('C1C4C8A4', 'H2', 'H3');
     testingBoard.inputMove(
       Move(Square(RANK.FOUR, FILE.C), Square(RANK.SEVEN, FILE.C))
     );
@@ -68,6 +50,7 @@ describe('board', () => {
     expect(testingBoard.moveHistory.length).toBe(1);
 
     const result = testingBoard.undoMove();
+
     expect(testingBoard.currentLegalMoves.length).toBe(6);
     expect(testingBoard.moveHistory.length).toBe(0);
     expect(result).toEqual(BoardSuccess.UNDO_SUCCESS);

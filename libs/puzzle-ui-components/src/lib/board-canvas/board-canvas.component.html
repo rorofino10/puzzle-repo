@@ -10,11 +10,13 @@
   </div>
   } @for (square of board.golden_squares; track $index) {
   <div
-    class="square canvas bg-primary"
+    class="square select-none canvas bg-primary text-transparent hover:text-primary-foreground transition-colors duration-300 flex items-center justify-center"
     (click)="setSelectedSquare(square.file, square.rank)"
     [style.gridColumn]="square.file + 1"
     [style.gridRow]="board.HEIGHT - square.rank + 1"
-  ></div>
+  >
+    {{ square.file + 1 | boardFile }}{{ square.rank + 1 }}
+  </div>
   } @for (square of board.normie_pieces; track $index) {
   <div
     [ngClass]="{
@@ -23,13 +25,15 @@
         square.rank === selectedPieceSquare?.rank
     }"
     (click)="setSelectedPiece(square.file, square.rank)"
-    class="transition-transform z-20 block bg-muted-foreground w-full aspect-square rounded-full hover:scale-150"
+    class="select-none text-transparent hover:text-muted transition-[colors, transform] duration-300 flex items-center justify-center z-20 bg-muted-foreground w-full aspect-square rounded-full hover:scale-150"
     [style.gridColumn]="square.file + 1"
     [style.gridRow]="board.HEIGHT - square.rank + 1"
-  ></div>
+  >
+    {{ square.file + 1 | boardFile }}{{ square.rank + 1 }}
+  </div>
   } @for (square of board.golden_pieces; track $index) {
   <div
-    class="transition-transform z-20 block bg-destructive w-full aspect-square rounded-full hover:scale-150"
+    class="select-none text-transparent hover:text-destructive-foreground transition-[colors, transform] duration-300 flex items-center justify-center z-20 bg-destructive w-full aspect-square rounded-full hover:scale-150"
     [ngClass]="{
       highlighted:
         square.file === selectedPieceSquare?.file &&
@@ -38,6 +42,8 @@
     (click)="setSelectedPiece(square.file, square.rank)"
     [style.gridColumn]="square.file + 1"
     [style.gridRow]="board.HEIGHT - square.rank + 1"
-  ></div>
+  >
+    {{ square.file + 1 | boardFile }}{{ square.rank + 1 }}
+  </div>
   }
 </div>

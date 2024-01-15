@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  ViewChild,
+  signal,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   Board,
@@ -11,6 +17,8 @@ import { BoardCanvasComponent } from '../board-canvas/board-canvas.component';
 import { BoardInfoComponent } from '../board-info/board-info.component';
 import { BoardSuccess, isBoardError } from '@puzzle-repo/puzzle-move-generator';
 import { BoardStateDialogComponent } from './board-state-dialog/board-state-dialog.component';
+import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
+import { solve } from '@puzzle-repo/puzzle-engine';
 
 @Component({
   selector: 'board',
@@ -20,6 +28,7 @@ import { BoardStateDialogComponent } from './board-state-dialog/board-state-dial
     BoardCanvasComponent,
     BoardInfoComponent,
     BoardStateDialogComponent,
+    HlmButtonDirective,
   ],
   templateUrl: './board.component.html',
   styleUrl: './board.component.scss',
@@ -27,7 +36,8 @@ import { BoardStateDialogComponent } from './board-state-dialog/board-state-dial
 export class BoardComponent {
   @Input({ required: true }) board!: Board;
   @Input({ required: true }) showInfo!: boolean;
-  protected boardStateEmitter: EventEmitter<BoardState> = new EventEmitter();
+  protected readonly boardState = signal<BoardState>(BoardState.UNDEFINED);
+  protected readonly moves = signal<Move[]>([]);
 
   inputRandomMove(): void {
     const moves = this.board.currentLegalMoves;
@@ -42,17 +52,13 @@ export class BoardComponent {
 
   inputMove(move: Move): void {
     const res = this.board.inputMove(move);
+    this.moves.set(this.board.allMovesHistory);
+    this.boardState.set(this.board.gameState);
 
     if (Object.values(BoardError).includes(res as BoardError)) {
       // Implement alert dialog
       console.error(res);
       return;
-    }
-
-    // console.log(this.board.moveHistory.length, MoveToString(move));
-    // if (res === BoardSuccess.WIN) console.log(res);
-    if (this.board.gameState !== BoardState.UNDEFINED) {
-      this.boardStateEmitter.emit(this.board.gameState);
     }
   }
   undoMove(): void {
@@ -85,6 +91,14 @@ export class BoardComponent {
     );
     console.log(moveHistoryString);
     console.log(undoHistoryString);
+  }
+  trySolve(): void {
+    console.log('Solve Start');
+    console.time('solve');
+    solve(this.board).forEach((position) => {
+      console.log(position.moves.map((move) => MoveToString(move)));
+    });
+    console.timeEnd('solve');
   }
 }
 

@@ -30,6 +30,12 @@ export class Board {
   private golden_squares_bitboard: BitBoard;
   // prettier-ignore
   private get occupancy(): BitBoard { return new BitBoard(this.normie_pieces_bitboard.getBoard() | this.golden_pieces_bitboard.getBoard());}
+  public get configuration(): bigint {
+    return getConfiguration(
+      this.normie_pieces_bitboard.getBoard(),
+      this.golden_pieces_bitboard.getBoard()
+    );
+  }
 
   private _normie_pieces: Square[] = [];
   private _golden_pieces: Square[] = [];
@@ -360,4 +366,13 @@ export const isBoardError = (val: any): boolean => {
     return true;
   }
   return false;
+};
+
+const getConfiguration = (
+  normiePieces: bigint,
+  goldenPieces: bigint
+): bigint => {
+  // const configuration =(BigInt.asUintN(128, goldenPieces) << BigInt(64)) | normiePieces;
+  const configuration = normiePieces | goldenPieces;
+  return configuration;
 };

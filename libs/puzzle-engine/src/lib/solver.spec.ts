@@ -1,5 +1,5 @@
 import { Board, MoveToString } from '@puzzle-repo/puzzle-move-generator';
-import { calls, search, solve } from './solver';
+import { solve } from './solver';
 
 const easyBoard = Board.FromString('A1', 'A3', 'A2');
 const mediumBoard = Board.FromString('A2C1', 'C7', 'B2');
@@ -12,8 +12,8 @@ const kindaHardBoard = Board.FromString(
 );
 describe('solver', () => {
   test('Solve Board', () => {
-    const board = Board.FromString('A3A5D5A2E2', 'B1', 'C3');
-    const solvedPositions = solve(board);
+    const board = Board.FromString('A1A3A5C5E5', 'E1', 'C3');
+    const solvedPositions = solve(board, 13);
     solvedPositions.forEach((position) => {
       console.log(
         position.moves.map((move) => MoveToString(move)),
@@ -22,10 +22,13 @@ describe('solver', () => {
     });
   });
   // test('Solve Easy Board', () => {
-  //   const bestPosition = search(easyBoard, 2);
-  //   // console.log(calls());
-  //   console.log(bestPosition.moves.map((move) => MoveToString(move)));
-  //   expect(bestPosition.moves.length).toBe(1);
+  //   const solvedPositions = solve(kindaHardBoard, 5);
+  //   solvedPositions.forEach((position) => {
+  //     console.log(
+  //       position.moves.map((move) => MoveToString(move)),
+  //       position.moves.length
+  //     );
+  //   });
   // });
   // test('Solve Medium Board', () => {
   //   const bestPosition = search(mediumBoard, 5);

@@ -1,7 +1,6 @@
 <main>
-  <board-state-dialog
-    [boardStateEvent]="boardStateEmitter"
-  ></board-state-dialog>
+  <button (click)="trySolve()" [variant]="'default'" hlmBtn>Try Solve</button>
+  <board-state-dialog [moves]="moves()" [boardState]="boardState()" />
   <board-canvas
     [board]="board"
     (moveEvent)="inputMove($event)"

@@ -19,7 +19,7 @@ export const PlayRoutes: Routes = [
   },
 
   {
-    path: 'level/normie_pieces/:golden_piece/:golden_square',
+    path: 'level/:normie_pieces/:golden_piece/:golden_square',
     loadComponent: () =>
       import('./levels/level-n/level-n.component').then(
         (x) => x.LevelNComponent
